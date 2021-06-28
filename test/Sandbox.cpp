@@ -6,6 +6,7 @@ using namespace std;
 class Sandbox: public Violet::Application {
     public:
         Sandbox(){
+            Violet::Log:getCoreLogger();
 
         }
 

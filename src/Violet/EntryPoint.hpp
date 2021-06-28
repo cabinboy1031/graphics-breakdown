@@ -4,6 +4,7 @@
 extern Violet::Application* Violet::CreateApplication();
 
 int main(int argc, char** argv){
+    Violet::Log::init();
     auto *app = Violet::CreateApplication();
     app->run();
     delete app;
