@@ -1,0 +1,16 @@
+#+TITLE: Game engine plan on a high level.
+
+* Point of entry
+* Application Layer
+* Window Layer
+** Input
+** Events
+* Renderer
+* Render API abstraction
+* Debugging support
+* Scripting language(hah maybe)
+* Memory Systems
+* Entity Component System
+* Physics
+* File I/O + VFS
+* Build System
