@@ -21,5 +21,16 @@ namespace Violet{
     };
 }
 
+// core log macros
+#define VGE_CORE_ERROR(...) Violet::Log::getCoreLogger()->error(__VA_ARGS__);
+#define VGE_CORE_WARN(...) Violet::Log::getCoreLogger()->warn(__VA_ARGS__);
+#define VGE_CORE_INFO(...) Violet::Log::getCoreLogger()->info(__VA_ARGS__);
+#define VGE_CORE_TRACE(...) Violet::Log::getCoreLogger()->trace(__VA_ARGS__);
+
+// client log macros
+#define VGE_ERROR(...) Violet::Log::getClientLogger()->error(__VA_ARGS__);
+#define VGE_WARN(...) Violet::Log::getClientLogger()->warn(__VA_ARGS__);
+#define VGE_INFO(...) Violet::Log::getClientLogger()->info(__VA_ARGS__);
+#define VGE_TRACE(...) Violet::Log::getClientLogger()->trace(__VA_ARGS__);
 
 #endif // __LOG_H_
