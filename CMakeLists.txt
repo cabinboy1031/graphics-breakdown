@@ -13,14 +13,31 @@ add_subdirectory(lib/spdlog/)
 # cmake options
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Compile preprocessor commands
-add_compile_definitions(VGE_PLATFORM_LINUX)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+  # Compile preprocessor commands
+  add_compile_definitions(
+    VGE_PLATFORM_LINUX
+    VGE_BUILD_SHARED
+    )
+endif()
+
+if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+  add_compile_definitions(VGE_DEBUG)
+elseif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
+  add_compile_definitions(VGE_RELEASE)
+elseif(${CMAKE_BUILD_TYPE} STREQUAL "Dist")
+  add_compile_definitions(VGE_DIST)
+endif()
 
 # Source subdirectories/includes
 include_directories(src/)
 add_subdirectory(src/)
 
-
+############################################
 # test target executable
 add_executable(test
   test/Sandbox.cpp)
@@ -31,4 +48,4 @@ target_link_libraries(
   spdlog::spdlog
   )
 
-######################
+############################################
