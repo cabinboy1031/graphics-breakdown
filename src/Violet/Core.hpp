@@ -9,6 +9,9 @@
 
 #else
 #error Application only supports Linux builds right now!
-
 #endif //VGE_PLATFORM
+
+#define BIT(x) (1 << x)
+
+
 #endif // __VIOLET_CORE_HPP_
