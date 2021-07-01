@@ -6,12 +6,12 @@ set(CMAKE_BUILD_TYPE "Debug")
 
 # library packages
 set(OpenGL_GL_PREFERENCE "GLVND")
-find_package(glfw3 REQUIRED)
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)
 
 # Library subdirectories
 add_subdirectory(lib/spdlog/)
+add_subdirectory(lib/glfw/)
 
 # cmake options
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -49,6 +49,7 @@ target_link_libraries(
   test PRIVATE
   violetgl
   spdlog::spdlog
+  glfw
   )
 
 ############################################

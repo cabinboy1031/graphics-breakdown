@@ -8,6 +8,7 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 add_library(violetgl
   Violet/Application.cpp
   Violet/Log.cpp
+  Violet/Platform/Linux/LinuxWindow.cpp
   vgepch.hpp)
 
 target_precompile_headers(violetgl PRIVATE
