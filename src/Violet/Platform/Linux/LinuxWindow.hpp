@@ -5,6 +5,9 @@
 #include "Violet/Window.hpp"
 #include <GLFW/glfw3.h>
 
+#include "Violet/Events/ApplicationEvent.hpp"
+#include "Violet/Events/MouseEvent.hpp"
+#include "Violet/Events/KeyEvent.hpp"
 
 namespace Violet{
     class LinuxWindow: public Window {

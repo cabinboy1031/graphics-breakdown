@@ -8,7 +8,7 @@ namespace Violet {
     class MouseMovedEvent: public Event{
         public:
             MouseMovedEvent(float x, float y)
-                : m_mouseX(x), m_MouseY(y) {}
+                : m_MouseX(x), m_MouseY(y) {}
 
             inline float getX() const { return m_MouseX; }
             inline float getY() const { return m_MouseY; }
@@ -54,7 +54,7 @@ namespace Violet {
             MouseButtonEvent(int button)
                 : m_Button(button) {}
 
-            int m_Button
+            int m_Button;
     };
 
     class MouseButtonPressedEvent: public MouseButtonEvent {

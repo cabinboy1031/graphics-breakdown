@@ -20,7 +20,7 @@ namespace Violet {
     class KeyPressedEvent: public KeyEvent {
         public:
             KeyPressedEvent(int keycode, int repeatCount)
-                : KeyEvent(keycode), m_RepeatCount(repeatcount) {}
+                : KeyEvent(keycode), m_RepeatCount(repeatCount) {}
 
             inline int getRepeatCount() const { return m_RepeatCount; }
 
@@ -49,7 +49,7 @@ namespace Violet {
             EVENT_CLASS_TYPE(KeyReleased)
         private:
             int m_RepeatCount;
-    }
+    };
 }
 
 
