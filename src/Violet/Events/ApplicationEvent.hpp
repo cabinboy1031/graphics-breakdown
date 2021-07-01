@@ -1,8 +1,8 @@
 #ifndef __VIOLET_APPLICATIONEVENT_H_
 #define __VIOLET_APPLICATIONEVENT_H_
 
+#include "vgepch.hpp"
 #include "Event.hpp"
-#include <sstream>
 
 namespace Violet{
     class WindowResizeEvent: public Event {

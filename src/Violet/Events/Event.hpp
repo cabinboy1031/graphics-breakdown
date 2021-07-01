@@ -1,10 +1,8 @@
 #ifndef __VIOLET_EVENT_H_
 #define __VIOLET_EVENT_H_
 
+#include "vgepch.hpp"
 #include "Violet/Core.hpp"
-
-#include <string>
-#include <functional>
 
 namespace Violet {
     enum class EventType {

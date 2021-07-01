@@ -1,6 +1,7 @@
 #ifndef __VIOLET_GL_APPLICATION_HPP__
 #define __VIOLET_GL_APPLICATION_HPP__
 
+#include "vgepch.hpp"
 #include "Core.hpp"
 
 namespace VIOLET_API Violet{

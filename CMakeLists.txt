@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.16)
 project(violet_GL)
+
+# custom set variables
+set(CMAKE_BUILD_TYPE "Debug")
 
 # library packages
 set(OpenGL_GL_PREFERENCE "GLVND")

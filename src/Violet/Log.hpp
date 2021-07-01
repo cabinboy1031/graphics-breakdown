@@ -1,7 +1,7 @@
 #ifndef __VIOLET_LOGGER_H_
 #define __VIOLET_LOGGER_H_
 
-#include <memory>
+#include "vgepch.hpp"
 
 #include "Core.hpp"
 #include "spdlog/spdlog.h"
