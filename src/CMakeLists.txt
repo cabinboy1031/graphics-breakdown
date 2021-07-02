@@ -18,4 +18,5 @@ target_precompile_headers(violetgl PRIVATE
   )
 
 target_link_libraries(violetgl PRIVATE
-  spdlog::spdlog)
+  spdlog::spdlog
+  glad4)

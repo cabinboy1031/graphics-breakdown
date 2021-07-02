@@ -28,6 +28,7 @@ void LinuxWindow::init(const WindowProps& props) {
 
     VGE_CORE_INFO("Creating window {0} ({1}, {2})", props.title, props.width, props.height);
 
+    // initializing glfw
     if(!s_GLFWInit){
         int success = glfwInit();
         VGE_CORE_ASSERT(success, "Could not initialize GLFW!");
@@ -35,8 +36,16 @@ void LinuxWindow::init(const WindowProps& props) {
         s_GLFWInit = true;
     }
 
+    // window creation
     m_Window = glfwCreateWindow((int)props.width, (int)props.height, m_Data.title.c_str(), nullptr, nullptr);
     glfwMakeContextCurrent(m_Window);
+
+    //glad initialization
+    int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+    VGE_CORE_ASSERT(status, "Failed to initialize Glad!")
+    VGE_CORE_TRACE("Glad initialized successfully!")
+
+    //glfw additional settings
     glfwSetWindowUserPointer(m_Window, &m_Data);
     setVSync(true);
 

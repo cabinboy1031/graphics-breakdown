@@ -8,6 +8,8 @@
 #include "Violet/LayerStack.hpp"
 #include "Violet/Events/ApplicationEvent.hpp"
 
+#include <glad/glad.h>
+
 namespace VIOLET_API Violet{
     class Application {
         public:

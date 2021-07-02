@@ -8,6 +8,7 @@ project(violet_GL)
 add_subdirectory(lib/spdlog/)
 add_subdirectory(lib/glfw/)
 add_subdirectory(lib/glad/)
+include_directories(lib/glad/include/)
 
 # cmake options
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -15,6 +16,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# preproccessor definitions
+add_compile_definitions(GLFW_INCLUDE_NONE)
 
 if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   # Compile preprocessor commands

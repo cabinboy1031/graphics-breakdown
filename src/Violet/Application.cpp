@@ -3,6 +3,8 @@
 #include "Violet/Events/ApplicationEvent.hpp"
 #include "Violet/Log.hpp"
 
+#include <glad/glad.h>
+
 using namespace Violet;
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -12,6 +14,8 @@ Application::Application(){
     m_Window = std::unique_ptr<Window>(Window::create());
     m_Window->setEventCallback(BIND_EVENT_FN(onEvent));
 
+    unsigned int id;
+    glGenVertexArrays(1, &id);
 }
 
 Application::~Application(){
