@@ -23,6 +23,9 @@ void Application::run(){
     VGE_TRACE(e.toString());
 
     while (m_Running){
+        for(Layer* layer: m_LayerStack)
+            layer->onUpdate();
+
         m_Window->onUpdate();
     }
 }
@@ -30,10 +33,26 @@ void Application::run(){
 void Application::onEvent(Event& e){
     EventDispatcher dispatcher(e);
     dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+
     VGE_CORE_INFO("{0}", e.toString());
+
+    for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); ){
+        (*--it)->onEvent(e);
+        if(e.handled())
+            break;
+    }
 }
 
 bool Application::onWindowClose(WindowCloseEvent& e){
     m_Running = false;
     return true;
+}
+
+void Application::pushLayer(Layer* layer){
+    m_LayerStack.pushLayer(layer);
+
+}
+
+void Application::pushOverlay(Layer* overlay){
+    m_LayerStack.pushOverlay(overlay);
 }

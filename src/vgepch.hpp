@@ -5,5 +5,7 @@
 #include <string>
 #include <functional>
 #include <sstream>
+#include <vector>
+#include <map>
 
 #endif // __VGEPCH_H_

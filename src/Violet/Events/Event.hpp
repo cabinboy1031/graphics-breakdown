@@ -34,6 +34,8 @@ namespace Violet {
                 return getCategoryFlags() & category;
             }
 
+            bool handled() const { return m_Handled; }
+
         protected:
             bool m_Handled = false;
     };

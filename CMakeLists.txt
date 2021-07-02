@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(violet_GL)
 
 # custom set variables
-set(CMAKE_BUILD_TYPE "Debug")
+#set(CMAKE_BUILD_TYPE "Debug")
 
 # library packages
 set(OpenGL_GL_PREFERENCE "GLVND")
@@ -30,8 +30,10 @@ endif()
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
   add_compile_definitions(VGE_DEBUG)
+  add_compile_options(-Wall -O0)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
   add_compile_definitions(VGE_RELEASE)
+  add_compile_options(-O2)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "Dist")
   add_compile_definitions(VGE_DIST)
 endif()
