@@ -4,14 +4,10 @@ project(violet_GL)
 # custom set variables
 #set(CMAKE_BUILD_TYPE "Debug")
 
-# library packages
-set(OpenGL_GL_PREFERENCE "GLVND")
-find_package(OpenGL REQUIRED)
-find_package(GLEW REQUIRED)
-
 # Library subdirectories
 add_subdirectory(lib/spdlog/)
 add_subdirectory(lib/glfw/)
+add_subdirectory(lib/glad/)
 
 # cmake options
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -52,6 +48,7 @@ target_link_libraries(
   violetgl
   spdlog::spdlog
   glfw
+  glad4
   )
 
 ############################################
