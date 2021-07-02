@@ -34,7 +34,6 @@ void Application::onEvent(Event& e){
     EventDispatcher dispatcher(e);
     dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
 
-    VGE_CORE_INFO("{0}", e.toString());
 
     for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); ){
         (*--it)->onEvent(e);
