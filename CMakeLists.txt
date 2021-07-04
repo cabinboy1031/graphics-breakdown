@@ -7,6 +7,7 @@ project(violet_GL)
 # Library subdirectories
 add_subdirectory(lib/spdlog/)
 add_subdirectory(lib/glfw/)
+include_directories(lib/glfw/include/)
 add_subdirectory(lib/glad/)
 include_directories(lib/glad/include/)
 
@@ -36,6 +37,7 @@ elseif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
   add_compile_options(-O2)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "Dist")
   add_compile_definitions(VGE_DIST)
+  add_compile_options(-O4)
 endif()
 
 # Source subdirectories/includes

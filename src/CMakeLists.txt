@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 project(violet_GL_engine)
 
-find_package(spdlog REQUIRED)
-
 set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 add_library(violetgl
