@@ -1,11 +1,12 @@
 #include "vgepch.hpp"
 #include "ImguiLayer.hpp"
+#include "Violet/Application.hpp"
 
 #include "imgui.h"
 #include "GLFW/glfw3.h"
 #include "Violet/Platform/OpenGL/ImguiOpenGLRenderer.hpp"
+#include "backends/imgui_impl_glfw.h"
 
-#include "Violet/Application.hpp"
 
 using namespace Violet;
 
@@ -14,7 +15,7 @@ ImguiLayer::~ImguiLayer(){
 }
 
 void ImguiLayer::onAttach() {
-    ImGui::CreateContext();
+    ImGui::SetCurrentContext(ImGui::CreateContext());
     ImGui::StyleColorsDark();
 
     ImGuiIO& io = ImGui::GetIO();
@@ -44,7 +45,12 @@ void ImguiLayer::onAttach() {
     io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
     io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-    ImGui_ImplOpenGL3_Init("#version 430");
+    GLint major = 0;
+    GLint minor = 0;
+    glGetIntegerv(GL_MAJOR_VERSION, &major);
+    glGetIntegerv(GL_MINOR_VERSION, &minor);
+    VGE_CORE_TRACE("OpenGL version: {0}.{1}",major, minor);
+    ImGui_ImplOpenGL3_Init("#version 410");
 }
 
 void ImguiLayer::onDetach() {

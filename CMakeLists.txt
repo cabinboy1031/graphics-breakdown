@@ -6,6 +6,7 @@ project(violet_GL)
 
 # Library subdirectories
 add_subdirectory(lib/spdlog/)
+include_directories(lib/spdlog/)
 add_subdirectory(lib/glfw/)
 include_directories(lib/glfw/include/)
 add_subdirectory(lib/glad/)

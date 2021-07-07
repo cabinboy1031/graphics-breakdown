@@ -44,11 +44,6 @@ void LinuxWindow::init(const WindowProps& props) {
     int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     VGE_CORE_ASSERT(status, "Failed to initialize Glad!");
     VGE_CORE_TRACE("Glad initialized successfully!");
-    GLint major = 0;
-    GLint minor = 0;
-    glGetIntegerv(GL_MAJOR_VERSION, &major);
-    glGetIntegerv(GL_MINOR_VERSION, &minor);
-    VGE_CORE_TRACE("OpenGL version: {0}.{1}",major, minor);
 
 
     //glfw additional settings
