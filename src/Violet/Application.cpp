@@ -3,19 +3,19 @@
 #include "Violet/Events/ApplicationEvent.hpp"
 #include "Violet/Log.hpp"
 
-#include <glad/glad.h>
-
 using namespace Violet;
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+Application* Application::s_Instance = nullptr;
 
 Application::Application(){
+    VGE_CORE_ASSERT(!s_Instance, "Application already exists!");
+
     m_Window = std::unique_ptr<Window>(Window::create());
     m_Window->setEventCallback(BIND_EVENT_FN(onEvent));
 
-    unsigned int id;
-    glGenVertexArrays(1, &id);
+    s_Instance = this;
 }
 
 Application::~Application(){
@@ -23,12 +23,13 @@ Application::~Application(){
 }
 
 void Application::run(){
-    WindowResizeEvent e(1200, 720);
-    VGE_TRACE(e.toString());
-
     while (m_Running){
         for(Layer* layer: m_LayerStack)
             layer->onUpdate();
+
+        glClearColor(1,0,1,1);
+        glClear(GL_COLOR_BUFFER_BIT);
+
 
         m_Window->onUpdate();
     }

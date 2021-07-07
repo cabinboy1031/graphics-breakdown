@@ -28,11 +28,15 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   add_compile_definitions(
     VGE_PLATFORM_LINUX
     VGE_BUILD_SHARED
+    IMGUI_IMPL_OPENGL_LOADER_GLAD
     )
 endif()
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  add_compile_definitions(VGE_DEBUG)
+  add_compile_definitions(
+    VGE_DEBUG
+    VGE_ENABLE_ASSERTS
+    )
   add_compile_options(-Wall -O0)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
   add_compile_definitions(VGE_RELEASE)

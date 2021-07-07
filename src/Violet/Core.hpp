@@ -12,8 +12,8 @@
 #define BIT(x) (1 << x)
 
 #ifdef VGE_ENABLE_ASSERTS
-    #define VGE_ASSERT(x, ...) { if(!(x)) { HZ_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak();}}
-    #define VGE_CORE_ASSERT(x, ...) { if(!(x)) { HZ_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __debugbreak();}}
+    #define VGE_ASSERT(x, ...) { if(!(x)) { VGE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();}}
+    #define VGE_CORE_ASSERT(x, ...) { if(!(x)) { VGE_CORE_ERROR("Assertion failed: {0}", __VA_ARGS__); __builtin_trap();}}
 #else
     #define VGE_ASSERT(x, ...)
     #define VGE_CORE_ASSERT(x, ...)

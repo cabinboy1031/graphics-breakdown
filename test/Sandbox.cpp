@@ -31,6 +31,7 @@ class Sandbox: public Violet::Application {
     public:
         Sandbox(){
             pushLayer(new FrameTimerLayer());
+            pushLayer(new Violet::ImguiLayer());
         }
 
         ~Sandbox(){

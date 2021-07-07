@@ -10,7 +10,7 @@ add_library(violetgl
   Violet/Layer.cpp
   Violet/Platform/Linux/LinuxWindow.cpp
   Violet/Platform/OpenGL/ImguiOpenGLRenderer.cpp
-  Violet/ImGui/ImguiLayer.cpp
+  Violet/ImGui/ImGuiLayer.cpp
   vgepch.hpp)
 
 target_precompile_headers(violetgl PRIVATE
