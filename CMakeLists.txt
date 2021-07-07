@@ -10,6 +10,8 @@ add_subdirectory(lib/glfw/)
 include_directories(lib/glfw/include/)
 add_subdirectory(lib/glad/)
 include_directories(lib/glad/include/)
+add_subdirectory(lib/imgui)
+include_directories(lib/imgui/)
 
 # cmake options
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -55,6 +57,9 @@ target_link_libraries(
   spdlog::spdlog
   glfw
   glad4
+  imgui
+  imgui-opengl3
+  imgui-glfw
   )
 
 ############################################
