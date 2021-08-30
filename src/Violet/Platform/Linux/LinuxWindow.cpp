@@ -1,4 +1,5 @@
-#include "LinuxWindow.hpp"
+#include "Violet/Platform/Linux/LinuxWindow.hpp"
+#include "GLFW/glfw3.h"
 
 using namespace Violet;
 
@@ -35,6 +36,12 @@ void LinuxWindow::init(const WindowProps& props) {
 
         s_GLFWInit = true;
     }
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
+    VGE_CORE_TRACE("GLFW initialized successfully.")
+
 
     // window creation
     m_Window = glfwCreateWindow((int)props.width, (int)props.height, m_Data.title.c_str(), nullptr, nullptr);
@@ -42,8 +49,9 @@ void LinuxWindow::init(const WindowProps& props) {
 
     //glad initialization
     int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    VGE_CORE_ASSERT(status, "Failed to initialize Glad!")
-    VGE_CORE_TRACE("Glad initialized successfully!")
+    VGE_CORE_ASSERT(status, "Failed to initialize Glad!");
+    VGE_CORE_TRACE("Glad initialized successfully!");
+
 
     //glfw additional settings
     glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -84,6 +92,12 @@ void LinuxWindow::init(const WindowProps& props) {
                 break;
             }
         }
+    });
+
+    glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode){
+        WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+        KeyTypedEvent event(keycode);
+        data.eventCallback(event);
     });
 
     glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods){

@@ -1,4 +1,4 @@
-#include "LayerStack.hpp"
+#include "Violet/LayerStack.hpp"
 
 using namespace Violet;
 
@@ -24,6 +24,7 @@ void LayerStack::popLayer(Layer* layer){
     if(it != m_Layers.end()){
         m_Layers.erase(it);
         m_LayerInsert--;
+        layer->onDetach();
     }
 }
 
@@ -32,6 +33,6 @@ void LayerStack::popOverlay(Layer* overlay){
     if(it != m_Layers.end()){
         m_Layers.erase(it);
         m_LayerInsert--;
+        overlay->onDetach();
     }
-
 }
