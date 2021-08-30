@@ -84,11 +84,47 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include "glad/glad.h"
 #include "imgui.h"
 #include "Violet/Platform/OpenGL/ImguiOpenGLRenderer.hpp"
 #include <stdio.h>
+#if defined(_MSC_VER) && _MSC_VER <= 1500 // MSVC 2008 or earlier
+#include <stddef.h>     // intptr_t
+#else
 #include <stdint.h>     // intptr_t
+#endif
+
+#include<glad/glad.h>
+
+// Vertex arrays are not supported on ES2/WebGL1 unless Emscripten which uses an extension
+#ifndef IMGUI_IMPL_OPENGL_ES2
+#define IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY
+#elif defined(__EMSCRIPTEN__)
+#define IMGUI_IMPL_OPENGL_USE_VERTEX_ARRAY
+#define glBindVertexArray       glBindVertexArrayOES
+#define glGenVertexArrays       glGenVertexArraysOES
+#define glDeleteVertexArrays    glDeleteVertexArraysOES
+#define GL_VERTEX_ARRAY_BINDING GL_VERTEX_ARRAY_BINDING_OES
+#endif
+
+// Desktop GL 3.2+ has glDrawElementsBaseVertex() which GL ES and WebGL don't have.
+#if !defined(IMGUI_IMPL_OPENGL_ES2) && !defined(IMGUI_IMPL_OPENGL_ES3) && defined(GL_VERSION_3_2)
+#define IMGUI_IMPL_OPENGL_MAY_HAVE_VTX_OFFSET
+#endif
+
+// Desktop GL 3.3+ has glBindSampler()
+#if !defined(IMGUI_IMPL_OPENGL_ES2) && !defined(IMGUI_IMPL_OPENGL_ES3) && defined(GL_VERSION_3_3)
+#define IMGUI_IMPL_OPENGL_MAY_HAVE_BIND_SAMPLER
+#endif
+
+// Desktop GL 3.1+ has GL_PRIMITIVE_RESTART state
+#if !defined(IMGUI_IMPL_OPENGL_ES2) && !defined(IMGUI_IMPL_OPENGL_ES3) && defined(GL_VERSION_3_1)
+#define IMGUI_IMPL_OPENGL_MAY_HAVE_PRIMITIVE_RESTART
+#endif
+
+// Desktop GL use extension detection
+#if !defined(IMGUI_IMPL_OPENGL_ES2) && !defined(IMGUI_IMPL_OPENGL_ES3)
+#define IMGUI_IMPL_OPENGL_MAY_HAVE_EXTENSIONS
+#endif
 
 // OpenGL Data
 struct ImGui_ImplOpenGL3_Data

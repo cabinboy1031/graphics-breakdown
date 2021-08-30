@@ -24,13 +24,11 @@ Application::~Application(){
 
 void Application::run(){
     while (m_Running){
+        // glClearColor(0,0,0,1);
+        // glClear(GL_COLOR_BUFFER_BIT);
+
         for(Layer* layer: m_LayerStack)
             layer->onUpdate();
-
-        glClearColor(1,0,1,1);
-        glClear(GL_COLOR_BUFFER_BIT);
-
-
         m_Window->onUpdate();
     }
 }
@@ -54,9 +52,10 @@ bool Application::onWindowClose(WindowCloseEvent& e){
 
 void Application::pushLayer(Layer* layer){
     m_LayerStack.pushLayer(layer);
-
+    layer->onAttach();
 }
 
 void Application::pushOverlay(Layer* overlay){
     m_LayerStack.pushOverlay(overlay);
+    overlay->onAttach();
 }

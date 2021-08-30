@@ -2,13 +2,11 @@
 #include "Violet/ImGui/ImguiLayer.hpp"
 #include "Violet/Application.hpp"
 
-#include "glad/glad.h"
 #include "imgui.h"
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "Violet/Platform/OpenGL/ImguiOpenGLRenderer.hpp"
-// Copy pasted includes
-#include <stdio.h>
-#include <stdint.h>     // intptr_t
+#include "backends/imgui_impl_glfw.h"
 
 using namespace Violet;
 
@@ -47,29 +45,24 @@ void ImguiLayer::onAttach() {
     io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
     io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-    GLint major = 0;
-    GLint minor = 0;
-    glGetIntegerv(GL_MAJOR_VERSION, &major);
-    glGetIntegerv(GL_MINOR_VERSION, &minor);
-    VGE_CORE_TRACE("OpenGL version: {0}.{1}",major, minor);
-    ImGui_ImplOpenGL3_Init();
+    Application& app = Application::get();
+    ImGui_ImplOpenGL3_Init("#version 410");
+    VGE_CORE_TRACE("ImGui initialized correctly!")
 }
 
 void ImguiLayer::onDetach() {
-
 }
 
 void ImguiLayer::onUpdate() {
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui::NewFrame();
-
-    Application& app = Application::get();
-
     ImGuiIO& io = ImGui::GetIO();
+    Application& app = Application::get();
     io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
 
     float time = (float) glfwGetTime();
     io.DeltaTime = m_Time > 0.0 ? (time - m_Time) : (1.0f / 60.0f);
+
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui::NewFrame();
 
     static bool show = true;
     ImGui::ShowDemoWindow(&show);
@@ -82,5 +75,3 @@ void ImguiLayer::onUpdate() {
 void ImguiLayer::onEvent(Event& event) {
 
 }
-
-/// *******************************************************************************************************************
