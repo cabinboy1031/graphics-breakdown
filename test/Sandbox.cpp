@@ -1,7 +1,8 @@
 #include <iostream>
+#include <chrono>
+
 #include "Violet/Violet.hpp"
 
-#include <chrono>
 
 using namespace std;
 

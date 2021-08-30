@@ -6,6 +6,7 @@ tmp/
 .cache
 compile_commands.json
 .ccls-cache
+.ccls
 ~
 
 #directories
