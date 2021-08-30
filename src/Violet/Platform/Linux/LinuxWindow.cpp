@@ -1,4 +1,4 @@
-#include "LinuxWindow.hpp"
+#include "Violet/Platform/Linux/LinuxWindow.hpp"
 
 using namespace Violet;
 
@@ -35,6 +35,10 @@ void LinuxWindow::init(const WindowProps& props) {
 
         s_GLFWInit = true;
     }
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 
     // window creation
     m_Window = glfwCreateWindow((int)props.width, (int)props.height, m_Data.title.c_str(), nullptr, nullptr);

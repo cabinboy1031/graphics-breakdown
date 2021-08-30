@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(violet_GL_engine)
 
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+#set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 
 add_library(violetgl
   Violet/Application.cpp
@@ -10,12 +10,7 @@ add_library(violetgl
   Violet/Layer.cpp
   Violet/Platform/Linux/LinuxWindow.cpp
   Violet/Platform/OpenGL/ImguiOpenGLRenderer.cpp
-  Violet/ImGui/ImguiLayer.cpp
-  vgepch.hpp)
-
-target_precompile_headers(violetgl PRIVATE
-  vgepch.hpp
-  )
+  Violet/ImGui/ImguiLayer.cpp)
 
 target_link_libraries(violetgl PRIVATE
   spdlog::spdlog

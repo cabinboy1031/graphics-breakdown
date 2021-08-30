@@ -2,7 +2,7 @@
 #define __VIOLET_CORE_HPP_
 
 #ifdef VGE_PLATFORM_LINUX
-    #define VIOLET_API __attribute__((visibility("default")))
+    #define VIOLET_API gnu::visibility("default")
 #elif VGE_PLATFORM_WINDOWS
     #error Application doesnt support windows at the moment! Try linux.
 #else

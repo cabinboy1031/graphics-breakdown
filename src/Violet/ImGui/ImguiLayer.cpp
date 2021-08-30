@@ -1,12 +1,14 @@
 #include "vgepch.hpp"
-#include "ImguiLayer.hpp"
+#include "Violet/ImGui/ImguiLayer.hpp"
 #include "Violet/Application.hpp"
 
+#include "glad/glad.h"
 #include "imgui.h"
 #include "GLFW/glfw3.h"
 #include "Violet/Platform/OpenGL/ImguiOpenGLRenderer.hpp"
-#include "backends/imgui_impl_glfw.h"
-
+// Copy pasted includes
+#include <stdio.h>
+#include <stdint.h>     // intptr_t
 
 using namespace Violet;
 
@@ -50,7 +52,7 @@ void ImguiLayer::onAttach() {
     glGetIntegerv(GL_MAJOR_VERSION, &major);
     glGetIntegerv(GL_MINOR_VERSION, &minor);
     VGE_CORE_TRACE("OpenGL version: {0}.{1}",major, minor);
-    ImGui_ImplOpenGL3_Init("#version 410");
+    ImGui_ImplOpenGL3_Init();
 }
 
 void ImguiLayer::onDetach() {
@@ -80,3 +82,5 @@ void ImguiLayer::onUpdate() {
 void ImguiLayer::onEvent(Event& event) {
 
 }
+
+/// *******************************************************************************************************************

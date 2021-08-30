@@ -21,6 +21,8 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
+set(CMAKE_CXX_STANDARD 20)
+
 # preproccessor definitions
 add_compile_definitions(GLFW_INCLUDE_NONE)
 
@@ -48,7 +50,7 @@ elseif(${CMAKE_BUILD_TYPE} STREQUAL "Dist")
 endif()
 
 # Source subdirectories/includes
-include_directories(src/)
+include_directories(include/)
 add_subdirectory(src/)
 
 ############################################
@@ -63,8 +65,6 @@ target_link_libraries(
   glfw
   glad4
   imgui
-  imgui-opengl3
-  imgui-glfw
   )
 
 ############################################

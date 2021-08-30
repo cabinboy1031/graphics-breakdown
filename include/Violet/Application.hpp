@@ -1,7 +1,6 @@
 #ifndef __VIOLET_GL_APPLICATION_HPP__
 #define __VIOLET_GL_APPLICATION_HPP__
 
-#include "vgepch.hpp"
 #include "Core.hpp"
 
 #include "Violet/Window.hpp"
@@ -11,8 +10,7 @@
 #include <glad/glad.h>
 #include "Violet/ImGui/ImguiLayer.hpp"
 
-namespace VIOLET_API Violet{
-
+namespace [[VIOLET_API]] Violet{
     class Application {
         public:
             Application();
