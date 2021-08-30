@@ -6,13 +6,10 @@ project(violet_GL)
 
 # Library subdirectories
 add_subdirectory(lib/spdlog/)
-include_directories(lib/spdlog/)
 add_subdirectory(lib/glfw/)
 include_directories(lib/glfw/include/)
 add_subdirectory(lib/glad/)
 include_directories(lib/glad/include/)
-add_subdirectory(lib/imgui)
-include_directories(lib/imgui/)
 
 # cmake options
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -20,8 +17,6 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-set(CMAKE_CXX_STANDARD 20)
 
 # preproccessor definitions
 add_compile_definitions(GLFW_INCLUDE_NONE)
@@ -31,15 +26,11 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
   add_compile_definitions(
     VGE_PLATFORM_LINUX
     VGE_BUILD_SHARED
-    IMGUI_IMPL_OPENGL_LOADER_GLAD
     )
 endif()
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Debug")
-  add_compile_definitions(
-    VGE_DEBUG
-    VGE_ENABLE_ASSERTS
-    )
+  add_compile_definitions(VGE_DEBUG)
   add_compile_options(-Wall -O0)
 elseif(${CMAKE_BUILD_TYPE} STREQUAL "Release")
   add_compile_definitions(VGE_RELEASE)
@@ -50,7 +41,7 @@ elseif(${CMAKE_BUILD_TYPE} STREQUAL "Dist")
 endif()
 
 # Source subdirectories/includes
-include_directories(include/)
+include_directories(src/)
 add_subdirectory(src/)
 
 ############################################
@@ -64,7 +55,6 @@ target_link_libraries(
   spdlog::spdlog
   glfw
   glad4
-  imgui
   )
 
 ############################################

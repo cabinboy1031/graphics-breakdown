@@ -1,21 +1,23 @@
 #include "Violet/Platform/Linux/LinuxInput.hpp"
 #include "Violet/Application.hpp"
 
+#include <iostream>
 #include <GLFW/glfw3.h>
 using namespace Violet;
 
 Input* Input::s_Instance = new LinuxInput();
 
-bool LinuxInput::isKeyPressedImpl(int keycode){
+bool LinuxInput::isKeyPressedImpl(KeyCode code){
     auto window = Application::get().getWindow().getNativeWindow();
-    auto state = glfwGetKey((GLFWwindow*)window, keycode);
+    auto state = glfwGetKey((GLFWwindow*)window, code);
 
-    return state == GLFW_PRESS || GLFW_REPEAT;
+    return state == GLFW_PRESS
+        || state == GLFW_REPEAT;
 }
 
-bool LinuxInput::isMouseButtonPressedImpl(int button){
+bool LinuxInput::isMouseButtonPressedImpl(MouseButton button){
     auto window = Application::get().getWindow().getNativeWindow();
-    auto state = glfwGetMouseButton((GLFWwindow*)window, button);
+    auto state = glfwGetMouseButton((GLFWwindow*)window, (int)button);
 
     return state == GLFW_PRESS;
 }
