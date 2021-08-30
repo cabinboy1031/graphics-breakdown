@@ -10,6 +10,8 @@
 #include <glad/glad.h>
 #include "Violet/ImGui/ImguiLayer.hpp"
 
+#include "Input.hpp"
+
 namespace [[VIOLET_API]] Violet{
     class Application {
         public:
