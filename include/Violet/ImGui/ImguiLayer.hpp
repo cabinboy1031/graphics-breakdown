@@ -1,6 +1,10 @@
 #ifndef __VIOLET_IMGUILAYER_H_
 #define __VIOLET_IMGUILAYER_H_
 
+#include "Violet/Events/Event.hpp"
+#include "Violet/Events/ApplicationEvent.hpp"
+#include "Violet/Events/KeyEvent.hpp"
+#include "Violet/Events/MouseEvent.hpp"
 #include "Violet/Layer.hpp"
 
 namespace Violet{
@@ -16,6 +20,15 @@ namespace Violet{
             virtual void onEvent(Event& event);
 
         private:
+            bool onMouseButtonPressedEvent(MouseButtonPressedEvent& e);
+            bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
+            bool onMouseMovedEvent(MouseMovedEvent& e);
+            bool onMouseScrolledEvent(MouseScrolledEvent& e);
+            bool onKeyPressedEvent(KeyPressedEvent& e);
+            bool onKeyReleasedEvent(KeyReleasedEvent& e);
+            bool onKeyTypedEvent(KeyTypedEvent& e);
+            bool onWindowResizedEvent(WindowResizeEvent& e);
+
             float m_Time = 0.0f;
     };
 }
