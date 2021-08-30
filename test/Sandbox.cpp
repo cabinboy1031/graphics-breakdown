@@ -20,6 +20,7 @@ class TestLayer: public Violet::Layer {
         }
 
         void onEvent(Violet::Event& event) override {
+            //VGE_CORE_INFO("{0}", event.toString());
         }
 
     private:

@@ -27,6 +27,8 @@ void Application::run(){
         // glClearColor(0,0,0,1);
         // glClear(GL_COLOR_BUFFER_BIT);
 
+        auto[x,y] = Input::getMousePosition();
+        VGE_CORE_TRACE("{0}, {1}",x, y);
         for(Layer* layer: m_LayerStack)
             layer->onUpdate();
         m_Window->onUpdate();

@@ -27,6 +27,8 @@ namespace Violet{
             { m_Data.eventCallback = callback; }
             void setVSync(bool enabled) override;
             bool isVSync() const override;
+
+            inline void* getNativeWindow() const override {return m_Window; }
         private:
             virtual void init(const WindowProps& props);
             virtual void shutdown();
