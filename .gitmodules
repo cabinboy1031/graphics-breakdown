@@ -6,7 +6,7 @@
 	url = https://github.com/glfw/glfw.git
 [submodule "lib/imgui"]
 	path = lib/imgui
-	url = ../imgui
+	url = ssh://git@github.com/cabinboy1031/imgui.git
 	branch = docking
 [submodule "lib/glm"]
 	path = lib/glm
