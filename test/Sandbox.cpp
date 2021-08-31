@@ -12,7 +12,30 @@ using namespace std;
 class TestLayer: public Violet::Layer {
     public:
         TestLayer()
-            : Layer("UPS Timer"){}
+            : Layer("UPS Timer"){
+            // Vertex array
+            glGenVertexArrays(1,&vertexArray);
+            glBindVertexArray(vertexArray);
+            // Vertex buffer
+            glGenBuffers(1, &vertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+            // Data
+            float vertices[3 * 3] {
+                -0.5f, -0.5f, 0.0f,
+                0.5f, -0.5f, 0.0f,
+                0.0f, 0.5f, 0.0f,
+            };
+            // Index Buffer
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+            glEnableVertexAttribArray(0);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+            glGenBuffers(1, &indexBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+            unsigned int indices[3] = {0, 1, 2};
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+        }
 
         void onUpdate() override {
             auto this_frame_record = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
@@ -20,8 +43,13 @@ class TestLayer: public Violet::Layer {
             last_record = this_frame_record;
 
             //VGE_CORE_INFO("{0}", event.toString());
-            glClearColor(1,0,0,1);
+            glClearColor(0,.5f,.5f,1);
             glClear(GL_COLOR_BUFFER_BIT);
+
+
+            glBindVertexArray(vertexArray);
+            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+            // Shader
              
             // glm::vec3 vector(10, 14, 10);
             // VGE_INFO("{0}, {1}, {2}", vector.x, vector.y, vector.z)
@@ -41,6 +69,7 @@ class TestLayer: public Violet::Layer {
 
     private:
         long int last_record;
+        unsigned int vertexArray, vertexBuffer, indexBuffer;
 
 };
 
