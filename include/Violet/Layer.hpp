@@ -14,6 +14,7 @@ namespace Violet {
             virtual void onDetach() {}
             virtual void onUpdate() {}
             virtual void onEvent(Event& event) {}
+            virtual void onImguiRender() {}
 
             inline const std::string& getName() const { return m_DebugName; }
         protected:

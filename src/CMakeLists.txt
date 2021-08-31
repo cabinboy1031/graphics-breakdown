@@ -9,14 +9,17 @@ add_library(violetgl
   Violet/LayerStack.cpp
   Violet/Layer.cpp
   Violet/Platform/Linux/LinuxWindow.cpp
-  Violet/Platform/OpenGL/ImguiOpenGLRenderer.cpp
   Violet/Platform/Linux/LinuxInput.cpp
-  Violet/ImGui/ImguiLayer.cpp)
+  Violet/ImGui/ImguiLayer.cpp
+  Violet/ImGui/ImguiBuild.cpp)
 
 target_link_libraries(violetgl PRIVATE
-  spdlog::spdlog
   glad4
   glfw
+  )
+
+target_link_libraries(violetgl PUBLIC
   imgui
   glm
+  spdlog
   )

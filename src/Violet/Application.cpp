@@ -17,6 +17,9 @@ Application::Application(){
     m_Window->setEventCallback(BIND_EVENT_FN(onEvent));
 
     s_Instance = this;
+
+    m_ImguiLayer = new ImguiLayer();
+    pushOverlay(m_ImguiLayer);
 }
 
 Application::~Application(){
@@ -28,6 +31,12 @@ void Application::run(){
     while (m_Running){
         for(Layer* layer: m_LayerStack)
             layer->onUpdate();
+
+        m_ImguiLayer->begin();
+        for(Layer* layer: m_LayerStack){
+            layer->onImguiRender();
+        }
+        m_ImguiLayer->end();
         m_Window->onUpdate();
     }
 }
@@ -51,10 +60,8 @@ bool Application::onWindowClose(WindowCloseEvent& e){
 
 void Application::pushLayer(Layer* layer){
     m_LayerStack.pushLayer(layer);
-    layer->onAttach();
 }
 
 void Application::pushOverlay(Layer* overlay){
     m_LayerStack.pushOverlay(overlay);
-    overlay->onAttach();
 }

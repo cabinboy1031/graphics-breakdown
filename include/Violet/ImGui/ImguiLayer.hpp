@@ -16,19 +16,12 @@ namespace Violet{
 
             virtual void onAttach();
             virtual void onDetach();
-            virtual void onUpdate();
-            virtual void onEvent(Event& event);
+            virtual void onImguiRender();
+
+            void begin();
+            void end();
 
         private:
-            bool onMouseButtonPressedEvent(MouseButtonPressedEvent& e);
-            bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent& e);
-            bool onMouseMovedEvent(MouseMovedEvent& e);
-            bool onMouseScrolledEvent(MouseScrolledEvent& e);
-            bool onKeyPressedEvent(KeyPressedEvent& e);
-            bool onKeyReleasedEvent(KeyReleasedEvent& e);
-            bool onKeyTypedEvent(KeyTypedEvent& e);
-            bool onWindowResizedEvent(WindowResizeEvent& e);
-
             float m_Time = 0.0f;
     };
 }

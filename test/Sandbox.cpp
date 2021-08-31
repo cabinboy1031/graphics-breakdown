@@ -2,6 +2,7 @@
 #include <chrono>
 #include <glm/glm.hpp>
 
+#include <imgui.h>
 #include "Violet/Violet.hpp"
 
 
@@ -35,6 +36,12 @@ class TestLayer: public Violet::Layer {
             }
         }
 
+        void onImguiRender() override{
+            ImGui::Begin("test");
+            ImGui::Text("Hello world!");
+            ImGui::End();
+        }
+
     private:
         long int last_record;
 
@@ -44,7 +51,6 @@ class Sandbox: public Violet::Application {
     public:
         Sandbox(){
             pushLayer(new TestLayer());
-            pushOverlay(new Violet::ImguiLayer());
         }
 
         ~Sandbox(){

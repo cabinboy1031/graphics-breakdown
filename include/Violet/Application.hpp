@@ -5,6 +5,7 @@
 
 #include "Violet/Window.hpp"
 #include "Violet/LayerStack.hpp"
+#include "Violet/ImGui/ImguiLayer.hpp"
 #include "Violet/Events/ApplicationEvent.hpp"
 
 #include <glad/glad.h>
@@ -21,7 +22,6 @@ namespace [[VIOLET_API]] Violet{
             void run();
 
             void onEvent(Event& e);
-
             void pushLayer(Layer* layer);
             void pushOverlay(Layer* layer);
 
@@ -30,6 +30,8 @@ namespace [[VIOLET_API]] Violet{
         private:
             bool onWindowClose(WindowCloseEvent &e);
             std::unique_ptr<Window> m_Window;
+            ImguiLayer* m_ImguiLayer;
+
             bool m_Running = true;
             LayerStack m_LayerStack;
             static Application* s_Instance;
