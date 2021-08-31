@@ -20,6 +20,7 @@ LinuxWindow::LinuxWindow(const WindowProps& props){
 }
 
 LinuxWindow::~LinuxWindow(){
+
     shutdown();
 }
 
@@ -41,7 +42,8 @@ void LinuxWindow::init(const WindowProps& props) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
-    VGE_CORE_TRACE("GLFW initialized successfully.")
+    VGE_CORE_TRACE("GLFW initialized successfully:");
+    VGE_CORE_INFO ("GLFW version: {0}", glfwGetVersionString());
 
 
     // window creation
@@ -49,9 +51,6 @@ void LinuxWindow::init(const WindowProps& props) {
 
     m_Context = new OpenGLContext(m_Window);
     m_Context->init();
-
-    VGE_CORE_TRACE("Glad initialized successfully!");
-
 
     //glfw additional settings
     glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -133,6 +132,7 @@ void LinuxWindow::init(const WindowProps& props) {
 }
 
 void LinuxWindow::shutdown(){
+    VGE_CORE_TRACE("GLFW shutting down.");
     glfwDestroyWindow(m_Window);
 }
 
