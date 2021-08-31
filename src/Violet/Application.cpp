@@ -27,7 +27,6 @@ Application::~Application(){
 }
 
 void Application::run(){
-    KeyCode kc;
     while (m_Running){
         for(Layer* layer: m_LayerStack)
             layer->onUpdate();
@@ -37,6 +36,7 @@ void Application::run(){
             layer->onImguiRender();
         }
         m_ImguiLayer->end();
+
         m_Window->onUpdate();
     }
 }

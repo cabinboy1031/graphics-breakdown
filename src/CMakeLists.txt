@@ -9,6 +9,7 @@ add_library(violetgl
   Violet/LayerStack.cpp
   Violet/Layer.cpp
   Violet/Platform/Linux/LinuxWindow.cpp
+  Violet/Platform/OpenGL/OpenGLContext.cpp
   Violet/Platform/Linux/LinuxInput.cpp
   Violet/ImGui/ImguiLayer.cpp
   Violet/ImGui/ImguiBuild.cpp)

@@ -1,4 +1,5 @@
 #include "Violet/Platform/Linux/LinuxWindow.hpp"
+#include "Violet/Platform/OpenGL/OpenGLContext.hpp"
 #include "GLFW/glfw3.h"
 
 using namespace Violet;
@@ -45,11 +46,10 @@ void LinuxWindow::init(const WindowProps& props) {
 
     // window creation
     m_Window = glfwCreateWindow((int)props.width, (int)props.height, m_Data.title.c_str(), nullptr, nullptr);
-    glfwMakeContextCurrent(m_Window);
 
-    //glad initialization
-    int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    VGE_CORE_ASSERT(status, "Failed to initialize Glad!");
+    m_Context = new OpenGLContext(m_Window);
+    m_Context->init();
+
     VGE_CORE_TRACE("Glad initialized successfully!");
 
 
@@ -138,7 +138,7 @@ void LinuxWindow::shutdown(){
 
 void LinuxWindow::onUpdate(){
     glfwPollEvents();
-    glfwSwapBuffers(m_Window);
+    m_Context->swapBuffers();
 }
 
 void LinuxWindow::setVSync(bool enabled){

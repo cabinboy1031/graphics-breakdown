@@ -3,9 +3,9 @@
 
 #include "vgepch.hpp"
 #include "Violet/Window.hpp"
+#include "Violet/Renderer/RenderingContext.hpp"
 
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
 
 #include "Violet/Events/ApplicationEvent.hpp"
 #include "Violet/Events/MouseEvent.hpp"
@@ -34,6 +34,7 @@ namespace Violet{
             virtual void shutdown();
         private:
             GLFWwindow* m_Window;
+            RenderingContext* m_Context;
 
             struct WindowData {
                 std::string title;

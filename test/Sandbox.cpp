@@ -3,7 +3,8 @@
 #include <glm/glm.hpp>
 
 #include <imgui.h>
-#include "Violet/Violet.hpp"
+#include <glad/glad.h>
+#include <Violet/Violet.hpp>
 
 
 using namespace std;
@@ -18,19 +19,15 @@ class TestLayer: public Violet::Layer {
             auto delta = this_frame_record - last_record;
             last_record = this_frame_record;
 
-            glClearColor(0,1,1,1);
-            glClear(GL_COLOR_BUFFER_BIT);
-        }
-
-        void onEvent(Violet::Event& event) override {
             //VGE_CORE_INFO("{0}", event.toString());
-            // glClearColor(0,0,0,1);
-            // glClear(GL_COLOR_BUFFER_BIT);
+            glClearColor(1,0,0,1);
+            glClear(GL_COLOR_BUFFER_BIT);
              
             // glm::vec3 vector(10, 14, 10);
             // VGE_INFO("{0}, {1}, {2}", vector.x, vector.y, vector.z)
+        }
 
-
+        void onEvent(Violet::Event& event) override {
             if(Violet::Input::isKeyPressed(Violet::VGE_KEY_TAB)){
                 VGE_INFO("Tab key is pressed!");
             }

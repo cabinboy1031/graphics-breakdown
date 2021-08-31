@@ -4,19 +4,25 @@ project(violet_GL)
 # custom set variables
 #set(CMAKE_BUILD_TYPE "Debug")
 
+######################################################################
 # Library subdirectories
+######################################################################
 add_subdirectory(lib/spdlog/)
 include_directories(lib/spdlog/)
 add_subdirectory(lib/glfw/)
 include_directories(lib/glfw/include/)
 add_subdirectory(lib/glad/)
 include_directories(lib/glad/include/)
-add_subdirectory(lib/imgui)
-include_directories(lib/imgui/)
 add_subdirectory(lib/glm/)
 include_directories(lib/glm/include/)
 
+# ImGui Settings
+set(IMGUI_EXAMPLES OFF)
+add_subdirectory(lib/imgui)
+include_directories(lib/imgui/)
+######################################################################
 # cmake options
+######################################################################
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -50,13 +56,15 @@ elseif(${CMAKE_BUILD_TYPE} STREQUAL "Dist")
   add_compile_definitions(VGE_DIST)
   add_compile_options(-O4)
 endif()
-
+######################################################################
 # Source subdirectories/includes
+######################################################################
 include_directories(include/)
 add_subdirectory(src/)
 
-############################################
+######################################################################
 # test target executable
+######################################################################
 add_executable(test
   test/Sandbox.cpp)
 
@@ -64,5 +72,4 @@ target_link_libraries(
   test PRIVATE
   violetgl
   )
-
-############################################
+######################################################################
