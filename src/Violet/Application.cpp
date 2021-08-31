@@ -3,6 +3,7 @@
 #include "Violet/Events/ApplicationEvent.hpp"
 #include "Violet/Log.hpp"
 
+#include <glm/glm.hpp>
 using namespace Violet;
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)

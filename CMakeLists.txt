@@ -13,6 +13,8 @@ add_subdirectory(lib/glad/)
 include_directories(lib/glad/include/)
 add_subdirectory(lib/imgui)
 include_directories(lib/imgui/)
+add_subdirectory(lib/glm/)
+include_directories(lib/glm/include/)
 
 # cmake options
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -62,9 +64,7 @@ target_link_libraries(
   test PRIVATE
   violetgl
   spdlog::spdlog
-  glfw
-  glad4
-  imgui
+  glm
   )
 
 ############################################

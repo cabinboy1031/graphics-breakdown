@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <glm/glm.hpp>
 
 #include "Violet/Violet.hpp"
 
@@ -24,6 +25,10 @@ class TestLayer: public Violet::Layer {
             //VGE_CORE_INFO("{0}", event.toString());
             // glClearColor(0,0,0,1);
             // glClear(GL_COLOR_BUFFER_BIT);
+             
+            // glm::vec3 vector(10, 14, 10);
+            // VGE_INFO("{0}, {1}, {2}", vector.x, vector.y, vector.z)
+
 
             if(Violet::Input::isKeyPressed(Violet::VGE_KEY_TAB)){
                 VGE_INFO("Tab key is pressed!");

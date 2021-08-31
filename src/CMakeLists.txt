@@ -17,4 +17,6 @@ target_link_libraries(violetgl PRIVATE
   spdlog::spdlog
   glad4
   glfw
-  imgui)
+  imgui
+  glm
+  )
