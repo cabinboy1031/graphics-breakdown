@@ -8,6 +8,7 @@ add_library(violetgl
   Violet/Log.cpp
   Violet/LayerStack.cpp
   Violet/Layer.cpp
+  Violet/Renderer/Shader.cpp
   Violet/Platform/Linux/LinuxWindow.cpp
   Violet/Platform/OpenGL/OpenGLContext.cpp
   Violet/Platform/Linux/LinuxInput.cpp
