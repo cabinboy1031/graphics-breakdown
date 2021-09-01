@@ -13,7 +13,7 @@ Application* Application::s_Instance = nullptr;
 Application::Application(){
     VGE_CORE_ASSERT(!s_Instance, "Application already exists!");
 
-    m_Window = std::unique_ptr<Window>(Window::create());
+    m_Window = std::unique_ptr<Window>(Window::create(WindowProps("Test Session", 800, 800)));
     m_Window->setEventCallback(BIND_EVENT_FN(onEvent));
 
     s_Instance = this;

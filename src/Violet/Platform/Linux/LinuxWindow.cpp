@@ -56,6 +56,8 @@ void LinuxWindow::init(const WindowProps& props) {
     glfwSetWindowUserPointer(m_Window, &m_Data);
     setVSync(true);
 
+    glfwSetErrorCallback(GLFWErrorCallback);
+
     //set GLFW callbacks
     glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height){
         WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);

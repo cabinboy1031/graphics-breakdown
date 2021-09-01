@@ -2,21 +2,27 @@
 #define VIOLET_OPENGL_BUFFER_H_
 #include "Violet/Renderer/Buffer.hpp"
 #include <cstdint>
+#include <glad/glad.h>
 
 namespace Violet{
+
     class OpenGLVertexBuffer: public VertexBuffer{
             public:
             OpenGLVertexBuffer(float* vertices, uint32_t size);
-            virtual ~OpenGLVertexBuffer();
+            virtual ~OpenGLVertexBuffer() override;
 
-            virtual void bind() const;
-            virtual void unbind() const;
+            virtual void bind() const override;
+            virtual void unbind() const override;
 
-            virtual uint32_t getCount() const { return m_Count; }
+            virtual const BufferLayout& getLayout() const override { return m_Layout; }
+            virtual void setLayout(const BufferLayout& layout) override { m_Layout = layout; }
+
+            virtual uint32_t getCount() const override { return m_Count; }
         private:
             uint32_t
             m_RendererID,
             m_Count;
+            BufferLayout m_Layout;
     };
 
     class OpenGLIndexBuffer: public IndexBuffer{

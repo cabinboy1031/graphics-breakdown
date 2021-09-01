@@ -1,4 +1,6 @@
 #include "Violet/Platform/OpenGL/OpenGLBuffer.hpp"
+#include "Violet/Events/Event.hpp"
+#include "Violet/Renderer/Buffer.hpp"
 #include <glad/glad.h>
 
 using namespace Violet;
@@ -8,7 +10,8 @@ using namespace Violet;
 //////////////////////////////////////////////////////////////////////
 
 OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t count)
-    :m_Count(count){
+    :m_Count(count)
+    ,m_Layout(BufferLayout({{ShaderDataType::None, ""}})){
     glGenBuffers(1, &m_RendererID);
     bind();
     glBufferData(GL_ARRAY_BUFFER, count * sizeof(float) , vertices, GL_STATIC_DRAW);
