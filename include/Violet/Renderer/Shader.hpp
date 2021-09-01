@@ -1,18 +1,17 @@
 #ifndef VIOLET_SHADER_H_
 #define VIOLET_SHADER_H_
 #include <string>
+#include "Violet/Log.hpp"
 
 namespace Violet{
     class Shader{
         public:
-            Shader(const std::string& vertexSrc,
-                   const std::string fragmentsrc);
-            ~Shader();
+            virtual ~Shader() {}
 
-            void bind() const;
-            void unbind() const;
-        private:
-            uint32_t m_RendererID;
+            virtual void bind() const = 0;
+            virtual void unbind() const = 0;
+
+            static Shader* create(const std::string vertexSrc, const std::string fragmentSrc);
     };
 }
 

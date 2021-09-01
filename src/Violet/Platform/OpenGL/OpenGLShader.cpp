@@ -1,4 +1,4 @@
-#include "Violet/Renderer/Shader.hpp"
+#include "Violet/Platform/OpenGL/OpenGLShader.hpp"
 #include "Violet/Log.hpp"
 
 #include <vector>
@@ -6,8 +6,8 @@
 
 using namespace Violet;
 
-Shader::Shader(const std::string& vertexSrc,
-               const std::string fragmentSrc){
+OpenGLShader::OpenGLShader(const std::string vertexSrc,
+                           const std::string fragmentSrc){
     // Create an empty vertex shader handle
     GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
@@ -36,7 +36,7 @@ Shader::Shader(const std::string& vertexSrc,
         // Use the infoLog as you see fit.
         //
         VGE_CORE_ERROR("{0}", infoLog.data());
-        VGE_CORE_ASSERT("Vertex shader compilation failed!");
+        VGE_CORE_ASSERT(false, "Vertex shader compilation failed!");
 
         // In this simple program, we'll just leave
         return;
@@ -69,6 +69,8 @@ Shader::Shader(const std::string& vertexSrc,
         glDeleteShader(vertexShader);
 
         // Use the infoLog as you see fit.
+        VGE_CORE_ERROR("{0}", infoLog.data());
+        VGE_CORE_ASSERT(false, "Fragment shader compilation failed!");
 
         // In this simple program, we'll just leave
         return;
@@ -105,6 +107,8 @@ Shader::Shader(const std::string& vertexSrc,
         glDeleteShader(fragmentShader);
 
         // Use the infoLog as you see fit.
+        VGE_CORE_ERROR("{0}", infoLog.data());
+        VGE_CORE_ASSERT(false, "shader program linking failed!");
 
         // In this simple program, we'll just leave
         return;
@@ -113,16 +117,19 @@ Shader::Shader(const std::string& vertexSrc,
 // Always detach shaders after a successful link.
     glDetachShader(program, vertexShader);
     glDetachShader(program, fragmentShader);
+
+    m_RendererID = program;
 }
 
-Shader::~Shader(){
-
+OpenGLShader::~OpenGLShader(){
+    VGE_CORE_TRACE("Deleting shader.")
+    glDeleteProgram(m_RendererID);
 }
 
-void Shader::bind() const {
-
+void OpenGLShader::bind() const {
+    glUseProgram(m_RendererID);
 }
 
-void Shader::unbind() const {
-
+void OpenGLShader::unbind() const {
+    glUseProgram(0);
 }

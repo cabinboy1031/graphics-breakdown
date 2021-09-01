@@ -6,6 +6,8 @@
 #include <glad/glad.h>
 #include <Violet/Violet.hpp>
 #include <Violet/Renderer/Shader.hpp>
+#include <Violet/Renderer/Buffer.hpp>
+#include <Violet/Renderer/VertexArray.hpp>
 
 
 using namespace std;
@@ -15,27 +17,21 @@ class TestLayer: public Violet::Layer {
         TestLayer()
             : Layer("UPS Timer"){
             // Vertex array
-            glGenVertexArrays(1,&vertexArray);
-            glBindVertexArray(vertexArray);
-            // Vertex buffer
-            glGenBuffers(1, &vertexBuffer);
-            glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-            // Data
+            m_VertexArray.reset(Violet::VertexArray::create());
             float vertices[3 * 3] {
                 -0.5f, -0.5f, 0.0f,
                 0.5f, -0.5f, 0.0f,
                 0.0f, 0.5f, 0.0f,
             };
-            // Index Buffer
-            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+            m_VertexBuffer.reset(Violet::VertexBuffer::create(vertices,sizeof(vertices)));
 
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-            glGenBuffers(1, &indexBuffer);
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
             unsigned int indices[3] = {0, 1, 2};
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+            m_IndexBuffer.reset(Violet::IndexBuffer::create(indices,3));
+
+
             std::string vertexSrc = R"(
 #version 330 core
 
@@ -58,7 +54,7 @@ void main(){
   color = vec4((v_Position * 0.5 + 0.5), 1.0);
 }
 )";
-            shader.reset(new Violet::Shader(vertexSrc, fragmentSrc));
+            m_Shader.reset(Violet::Shader::create(vertexSrc, fragmentSrc));
         }
 
         void onUpdate() override {
@@ -70,9 +66,9 @@ void main(){
             glClearColor(0,.5f,.5f,1);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            shader->bind();
-            glBindVertexArray(vertexArray);
-            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+            m_Shader->bind();
+            m_VertexArray->bind();
+            glDrawElements(GL_TRIANGLES, m_IndexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
             // Shader
              
             // glm::vec3 vector(10, 14, 10);
@@ -93,8 +89,11 @@ void main(){
 
     private:
         long int last_record;
-        unsigned int vertexArray, vertexBuffer, indexBuffer;
-        std::unique_ptr<Violet::Shader> shader;
+        unsigned int vertexArray, indexBuffer;
+        std::unique_ptr<Violet::Shader> m_Shader;
+        std::unique_ptr<Violet::VertexArray> m_VertexArray;
+        std::unique_ptr<Violet::VertexBuffer> m_VertexBuffer;
+        std::unique_ptr<Violet::IndexBuffer> m_IndexBuffer;
         
 
 };
