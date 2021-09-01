@@ -14,7 +14,7 @@ namespace Violet{
             virtual void bind() const override;
             virtual void unbind() const override;
 
-            virtual const BufferLayout& getLayout() const override { return m_Layout; }
+            virtual BufferLayout& getLayout() override { return m_Layout; }
             virtual void setLayout(const BufferLayout& layout) override { m_Layout = layout; }
 
             virtual uint32_t getCount() const override { return m_Count; }
