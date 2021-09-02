@@ -119,11 +119,11 @@ void main(){
 
             m_Shader2->bind();
             m_SquareVA->bind();
-            glDrawElements(GL_TRIANGLES, m_SquareVA->getIndexexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, m_SquareVA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 
             m_Shader->bind();
             m_VertexArray->bind();
-            glDrawElements(GL_TRIANGLES, m_IndexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, m_VertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
         }
 
         void onEvent(Violet::Event& event) override {

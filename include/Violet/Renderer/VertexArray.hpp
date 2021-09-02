@@ -16,7 +16,7 @@ namespace Violet{
             virtual void setIndexBuffer(std::shared_ptr<IndexBuffer> indexBuffer) = 0;
 
             virtual const std::vector<std::shared_ptr<VertexBuffer>> getVertexBuffers() const = 0;
-            virtual const std::shared_ptr<IndexBuffer> getIndexexBuffer() const = 0;
+            virtual const std::shared_ptr<IndexBuffer> getIndexBuffer() const = 0;
 
             static VertexArray* create();
     };

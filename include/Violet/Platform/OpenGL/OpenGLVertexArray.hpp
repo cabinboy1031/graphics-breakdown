@@ -17,7 +17,7 @@ namespace Violet{
 
             virtual const std::vector<std::shared_ptr<VertexBuffer>> getVertexBuffers() const override
             { return m_VertexBuffers; }
-            virtual const std::shared_ptr<IndexBuffer> getIndexexBuffer() const override
+            virtual const std::shared_ptr<IndexBuffer> getIndexBuffer() const override
             { return m_IndexBuffer; }
         private:
             uint32_t m_RendererID;
