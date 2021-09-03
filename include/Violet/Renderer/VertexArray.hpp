@@ -1,6 +1,7 @@
 #ifndef VIOLET_VERTEXARRAY_H_
 #define VIOLET_VERTEXARRAY_H_
 #include "Violet/Renderer/Buffer.hpp"
+#include <vector>
 #include <cstdint>
 #include <memory>
 

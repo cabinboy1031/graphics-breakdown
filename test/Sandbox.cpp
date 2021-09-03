@@ -1,14 +1,8 @@
 #include <iostream>
 #include <chrono>
-#include <glm/glm.hpp>
 
-#include <imgui.h>
-#include <glad/glad.h>
 #include <Violet/Violet.hpp>
-#include <Violet/Renderer/Shader.hpp>
-#include <Violet/Renderer/Buffer.hpp>
-#include <Violet/Renderer/VertexArray.hpp>
-
+#include <imgui.h>
 
 using namespace std;
 class TestLayer: public Violet::Layer {
@@ -114,16 +108,16 @@ void main(){
 
         void onUpdate() override {
             //VGE_CORE_INFO("{0}", event.toString());
-            glClearColor(0,.5f,.5f,1);
-            glClear(GL_COLOR_BUFFER_BIT);
+            Violet::RenderCommand::setClearColor({0,.5f,.5f,1});
+            Violet::RenderCommand::clear();
 
+            Violet::Renderer::beginScene();
             m_Shader2->bind();
-            m_SquareVA->bind();
-            glDrawElements(GL_TRIANGLES, m_SquareVA->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
-
+            Violet::Renderer::submit(m_SquareVA);
             m_Shader->bind();
-            m_VertexArray->bind();
-            glDrawElements(GL_TRIANGLES, m_VertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+            Violet::Renderer::submit(m_VertexArray);
+
+            Violet::Renderer::endScene();
         }
 
         void onEvent(Violet::Event& event) override {

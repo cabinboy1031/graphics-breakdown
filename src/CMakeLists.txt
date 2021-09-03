@@ -10,6 +10,8 @@ add_library(violetgl
   Violet/Layer.cpp
 
   Violet/Renderer/Renderer.cpp
+  Violet/Renderer/RendererAPI.cpp
+  Violet/Renderer/RenderCommand.cpp
   Violet/Renderer/Shader.cpp
   Violet/Renderer/Buffer.cpp
   Violet/Renderer/VertexArray.cpp
@@ -21,6 +23,7 @@ add_library(violetgl
   Violet/Platform/OpenGL/OpenGLBuffer.cpp
   Violet/Platform/OpenGL/OpenGLShader.cpp
   Violet/Platform/OpenGL/OpenGLVertexArray.cpp
+  Violet/Platform/OpenGL/OpenGLRenderAPI.cpp
 
   Violet/ImGui/ImguiLayer.cpp
   Violet/ImGui/ImguiBuild.cpp

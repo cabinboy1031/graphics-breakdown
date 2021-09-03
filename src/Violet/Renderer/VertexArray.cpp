@@ -5,9 +5,9 @@
 using namespace Violet;
 
 VertexArray* VertexArray::create(){
-    switch(Renderer::getAPI()){
-        case(RendererAPI::OpenGL):       return new OpenGLVertexArray();
-        case(RendererAPI::None):         VGE_CORE_ASSERT(false, "RendererAPI::None currently returns nullptr.");
+    switch(RendererAPI::getAPI()){
+        case(RendererAPI::API::OpenGL):       return new OpenGLVertexArray();
+        case(RendererAPI::API::None):         VGE_CORE_ASSERT(false, "RendererAPI::None currently returns nullptr.");
     }
     return nullptr;
 

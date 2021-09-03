@@ -1,6 +1,5 @@
 #ifndef VIOLET_BUFFER_H
 #define VIOLET_BUFFER_H
-#include "Violet/Renderer/Renderer.hpp"
 #include "Violet/Log.hpp"
 
 #include <cstdint>

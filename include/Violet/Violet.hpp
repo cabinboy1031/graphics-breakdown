@@ -9,6 +9,12 @@
 
 #include "Violet/ImGui/ImguiLayer.hpp"
 
+#include <Violet/Renderer/Renderer.hpp>
+#include <Violet/Renderer/RenderCommand.hpp>
+#include <Violet/Renderer/Shader.hpp>
+#include <Violet/Renderer/Buffer.hpp>
+#include <Violet/Renderer/VertexArray.hpp>
+
 //--------Entry Point--------------------
 #include "Violet/EntryPoint.hpp"
 //---------------------------------------

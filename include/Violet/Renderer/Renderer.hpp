@@ -1,18 +1,18 @@
-#ifndef VIOLET_RENDERER_API_H
-#define VIOLET_RENDERER_API_H
+#ifndef VIOLET_RENDERER_H
+#define VIOLET_RENDERER_H
+
+#include "RendererAPI.hpp"
+#include "RenderCommand.hpp"
+#include "VertexArray.hpp"
 
 namespace Violet{
-    enum class RendererAPI {
-    None = 0,
-    OpenGL = 1
-    };
-
     class Renderer{
         public:
-            inline static RendererAPI getAPI() { return s_RendererAPI; }
-            inline static void setAPI(RendererAPI api) { s_RendererAPI = api; }
-        private:
-            static RendererAPI s_RendererAPI;
+            static void beginScene();
+            static void endScene();
+
+            static void submit(const std::shared_ptr<VertexArray>& vertexArray);
+            inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
     };
 }
 
