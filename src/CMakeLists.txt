@@ -15,6 +15,7 @@ add_library(violetgl
   Violet/Renderer/Shader.cpp
   Violet/Renderer/Buffer.cpp
   Violet/Renderer/VertexArray.cpp
+  Violet/Renderer/Camera.cpp
 
   Violet/Platform/Linux/LinuxWindow.cpp
   Violet/Platform/Linux/LinuxInput.cpp

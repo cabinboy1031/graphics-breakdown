@@ -8,7 +8,10 @@ using namespace std;
 class TestLayer: public Violet::Layer {
     public:
         TestLayer()
-            : Layer("UPS Timer"){
+            : Layer("UPS Timer"),
+              m_Camera(-2.0f, 2.0f, -2.0f, 2.0f)
+        {
+
             // Vertex array
             m_VertexArray.reset(Violet::VertexArray::create());
             std::shared_ptr<Violet::VertexBuffer> m_VertexBuffer;
@@ -63,8 +66,10 @@ layout(location = 1) in vec4 a_Color;
 out vec3 v_Position;
 out vec4 v_Color;
 
+uniform mat4 u_ViewProjection;
+
 void main(){
-  gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+  gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
   v_Position = a_Position;
   v_Color = a_Color;
 }
@@ -87,8 +92,10 @@ void main(){
 layout(location = 0) in vec3 a_Position;
 out vec3 v_Position;
 
+uniform mat4 u_ViewProjection;
+
 void main(){
-  gl_Position = vec4(a_Position.x, a_Position.y, a_Position.z, 1.0);
+  gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
   v_Position = a_Position;
 }
 )";
@@ -110,20 +117,42 @@ void main(){
             //VGE_CORE_INFO("{0}", event.toString());
             Violet::RenderCommand::setClearColor({0,.5f,.5f,1});
             Violet::RenderCommand::clear();
+            //float newRotation = m_Camera.getRotation();
+            //newRotation =  newRotation + 0.5f;
+            //m_Camera.setRotation(newRotation);
 
-            Violet::Renderer::beginScene();
-            m_Shader2->bind();
-            Violet::Renderer::submit(m_SquareVA);
-            m_Shader->bind();
-            Violet::Renderer::submit(m_VertexArray);
+            if(Violet::Input::isKeyPressed(Violet::VGE_KEY_W)){
+                 m_CameraPosition.y += m_CameraSpeed;
+            }
+            if(Violet::Input::isKeyPressed(Violet::VGE_KEY_S)){
+                m_CameraPosition.y -= m_CameraSpeed;
+            }
+            if(Violet::Input::isKeyPressed(Violet::VGE_KEY_A)){
+                m_CameraPosition.x -= m_CameraSpeed;
+            }
+            if(Violet::Input::isKeyPressed(Violet::VGE_KEY_D)){
+                m_CameraPosition.x += m_CameraSpeed;
+            }
+
+            m_Camera.setPosition(m_CameraPosition);
+
+
+            Violet::Renderer::beginScene(m_Camera);
+
+            Violet::Renderer::submit(m_Shader2,m_SquareVA);
+            Violet::Renderer::submit(m_Shader, m_VertexArray);
 
             Violet::Renderer::endScene();
         }
 
         void onEvent(Violet::Event& event) override {
-            if(Violet::Input::isKeyPressed(Violet::VGE_KEY_TAB)){
-                VGE_INFO("Tab key is pressed!");
-            }
+            Violet::EventDispatcher dispatcher(event);
+            dispatcher.dispatch<Violet::KeyPressedEvent>(VGE_BIND_EVENT_FN(TestLayer::onKeyPressed));
+        }
+
+        bool onKeyPressed(Violet::KeyPressedEvent& event){
+
+            return true;
         }
 
         void onImguiRender() override{
@@ -137,7 +166,11 @@ void main(){
         std::shared_ptr<Violet::Shader> m_Shader2;
         std::shared_ptr<Violet::VertexArray> m_VertexArray;
         std::shared_ptr<Violet::VertexArray> m_SquareVA;
-        
+
+        Violet::OrthographicCamera m_Camera;
+
+        glm::vec3 m_CameraPosition = {0.0f, 0.0f, 0.0f};
+        float m_CameraSpeed = 0.1f;
 
 };
 
