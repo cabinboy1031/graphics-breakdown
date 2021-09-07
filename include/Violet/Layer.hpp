@@ -2,6 +2,7 @@
 #define __VIOLET_LAYER_H_
 
 #include "Violet/Core.hpp"
+#include "Violet/Core/Timestep.hpp"
 #include "Violet/Events/Event.hpp"
 
 namespace Violet {
@@ -12,9 +13,9 @@ namespace Violet {
 
             virtual void onAttach() {}
             virtual void onDetach() {}
-            virtual void onUpdate() {}
+            virtual void onUpdate(Timestep deltaTime) {}
             virtual void onEvent(Event& event) {}
-            virtual void onImguiRender() {}
+            virtual void onImguiRender(Timestep deltaTime) {}
 
             inline const std::string& getName() const { return m_DebugName; }
         protected:

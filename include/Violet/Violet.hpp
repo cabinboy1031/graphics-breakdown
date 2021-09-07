@@ -4,6 +4,8 @@
 #include "Violet/Layer.hpp"
 #include "Violet/Log.hpp"
 
+#include "Violet/Core/Timestep.hpp"
+
 #include "Violet/Input.hpp"
 #include "Violet/InputCodes.hpp"
 

@@ -113,7 +113,7 @@ void main(){
 
         }
 
-        void onUpdate() override {
+        void onUpdate(Violet::Timestep deltaTime) override {
             //VGE_CORE_INFO("{0}", event.toString());
             Violet::RenderCommand::setClearColor({0,.5f,.5f,1});
             Violet::RenderCommand::clear();
@@ -122,16 +122,16 @@ void main(){
             //m_Camera.setRotation(newRotation);
 
             if(Violet::Input::isKeyPressed(Violet::VGE_KEY_W)){
-                 m_CameraPosition.y += m_CameraSpeed;
+                 m_CameraPosition.y += m_CameraSpeed * deltaTime.getSeconds();
             }
             if(Violet::Input::isKeyPressed(Violet::VGE_KEY_S)){
-                m_CameraPosition.y -= m_CameraSpeed;
+                m_CameraPosition.y -= m_CameraSpeed * deltaTime.getSeconds();
             }
             if(Violet::Input::isKeyPressed(Violet::VGE_KEY_A)){
-                m_CameraPosition.x -= m_CameraSpeed;
+                m_CameraPosition.x -= m_CameraSpeed * deltaTime.getSeconds();
             }
             if(Violet::Input::isKeyPressed(Violet::VGE_KEY_D)){
-                m_CameraPosition.x += m_CameraSpeed;
+                m_CameraPosition.x += m_CameraSpeed * deltaTime.getSeconds();
             }
 
             m_Camera.setPosition(m_CameraPosition);
@@ -155,7 +155,7 @@ void main(){
             return true;
         }
 
-        void onImguiRender() override{
+        void onImguiRender(Violet::Timestep deltaTime) override{
             ImGui::Begin("test");
             ImGui::Text("Hello world!");
             ImGui::End();
@@ -170,7 +170,7 @@ void main(){
         Violet::OrthographicCamera m_Camera;
 
         glm::vec3 m_CameraPosition = {0.0f, 0.0f, 0.0f};
-        float m_CameraSpeed = 0.1f;
+        float m_CameraSpeed = 0.5f;
 
 };
 

@@ -4,6 +4,9 @@
 #include "Violet/Log.hpp"
 
 #include <glm/glm.hpp>
+
+// Temporary
+#include "GLFW/glfw3.h"
 using namespace Violet;
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
@@ -28,12 +31,16 @@ Application::~Application(){
 
 void Application::run(){
     while (m_Running){
+        float time = (float)glfwGetTime();
+        Timestep deltaTime = time - m_LastFrameTime;
+        m_LastFrameTime = time;
+
         for(Layer* layer: m_LayerStack)
-            layer->onUpdate();
+            layer->onUpdate(deltaTime);
 
         m_ImguiLayer->begin();
         for(Layer* layer: m_LayerStack){
-            layer->onImguiRender();
+            layer->onImguiRender(deltaTime);
         }
         m_ImguiLayer->end();
 

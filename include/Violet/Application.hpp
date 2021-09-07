@@ -7,6 +7,7 @@
 #include "Violet/LayerStack.hpp"
 #include "Violet/ImGui/ImguiLayer.hpp"
 #include "Violet/Events/ApplicationEvent.hpp"
+#include "Violet/Core/Timestep.hpp"
 
 #include "Violet/ImGui/ImguiLayer.hpp"
 
@@ -32,6 +33,8 @@ namespace [[VIOLET_API]] Violet{
             bool m_Running = true;
             LayerStack m_LayerStack;
             static Application* s_Instance;
+
+            float m_LastFrameTime;
     };
 
     // To be defined in CLIENT
