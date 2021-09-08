@@ -8,9 +8,12 @@ void Renderer::beginScene(Camera& camera){
 
 void Renderer::endScene(){}
 
-void Renderer::submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray){
+void Renderer::submit(const std::shared_ptr<Shader>& shader,
+                      const std::shared_ptr<VertexArray>& vertexArray,
+                      const glm::mat4& transform){
     shader->bind();
     shader->uploadUniformMat4("u_ViewProjection", s_ViewProjectionMatrix);
+    shader->uploadUniformMat4("u_Transform", transform);
 
     vertexArray->bind();
     RenderCommand::drawIndexed(vertexArray);

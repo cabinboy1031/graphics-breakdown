@@ -4,6 +4,8 @@
 #include <Violet/Violet.hpp>
 #include <imgui.h>
 
+#include <glm/glm.hpp>
+
 using namespace std;
 class TestLayer: public Violet::Layer {
     public:
@@ -41,10 +43,10 @@ class TestLayer: public Violet::Layer {
             std::shared_ptr<Violet::IndexBuffer> squareIB;
 
             float squareVertices[3 * 4] {
-                -0.75f, -0.75f, 0.0f,
-                 0.75f, -0.75f, 0.0f,
-                 0.75f,  0.75f, 0.0f,
-                -0.75f,  0.75f, 0.0f,
+                -0.5f, -0.5f, 0.0f,
+                 0.5f, -0.5f, 0.0f,
+                 0.5f,  0.5f, 0.0f,
+                -0.5f,  0.5f, 0.0f,
             };
 
             squareVB.reset(Violet::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
@@ -67,9 +69,10 @@ out vec3 v_Position;
 out vec4 v_Color;
 
 uniform mat4 u_ViewProjection;
+uniform mat4 u_Transform;
 
 void main(){
-  gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+  gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
   v_Position = a_Position;
   v_Color = a_Color;
 }
@@ -80,6 +83,7 @@ void main(){
 layout(location = 0) out vec4 color;
 in vec3 v_Position;
 in vec4 v_Color;
+
 
 void main(){
   color = v_Color;
@@ -93,9 +97,10 @@ layout(location = 0) in vec3 a_Position;
 out vec3 v_Position;
 
 uniform mat4 u_ViewProjection;
+uniform mat4 u_Transform;
 
 void main(){
-  gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+  gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
   v_Position = a_Position;
 }
 )";
@@ -114,7 +119,7 @@ void main(){
         }
 
         void onUpdate(Violet::Timestep deltaTime) override {
-            //VGE_CORE_INFO("{0}", event.toString());
+            VGE_CORE_INFO("Delta time: {0}({1} UPS)", deltaTime.getSeconds(), 1.0/deltaTime.getSeconds());
             Violet::RenderCommand::setClearColor({0,.5f,.5f,1});
             Violet::RenderCommand::clear();
             //float newRotation = m_Camera.getRotation();
@@ -134,12 +139,18 @@ void main(){
                 m_CameraPosition.x += m_CameraSpeed * deltaTime.getSeconds();
             }
 
-            m_Camera.setPosition(m_CameraPosition);
-
+            //m_Camera.setPosition(m_CameraPosition);
+            glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
             Violet::Renderer::beginScene(m_Camera);
-
-            Violet::Renderer::submit(m_Shader2,m_SquareVA);
+            for (int i = -10; i <= 10; i++){
+                for(int j = -10; j <= 10; j++){
+                    glm::vec3 pos(i * 0.11f, j * 0.11f ,0.0f);
+                    glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+                    Violet::Renderer::submit(m_Shader2,m_SquareVA,transform);
+                }
+            }
+            Violet::Renderer::submit(m_Shader2,m_SquareVA, glm::translate(glm::mat4(1.0), m_CameraPosition));
             Violet::Renderer::submit(m_Shader, m_VertexArray);
 
             Violet::Renderer::endScene();
@@ -170,7 +181,7 @@ void main(){
         Violet::OrthographicCamera m_Camera;
 
         glm::vec3 m_CameraPosition = {0.0f, 0.0f, 0.0f};
-        float m_CameraSpeed = 0.5f;
+        float m_CameraSpeed = 1.f;
 
 };
 
