@@ -12,17 +12,17 @@ namespace Violet{
             virtual void bind() const override;
             virtual void unbind() const override;
 
-            virtual void addVertexBuffer(std::shared_ptr<VertexBuffer> vertexBuffer) override;
-            virtual void setIndexBuffer(std::shared_ptr<IndexBuffer> indexBuffer) override;
+            virtual void addVertexBuffer(Reference<VertexBuffer> vertexBuffer) override;
+            virtual void setIndexBuffer(Reference<IndexBuffer> indexBuffer) override;
 
-            virtual const std::vector<std::shared_ptr<VertexBuffer>> getVertexBuffers() const override
+            virtual const std::vector<Reference<VertexBuffer>> getVertexBuffers() const override
             { return m_VertexBuffers; }
-            virtual const std::shared_ptr<IndexBuffer> getIndexBuffer() const override
+            virtual const Reference<IndexBuffer> getIndexBuffer() const override
             { return m_IndexBuffer; }
         private:
             uint32_t m_RendererID;
-            std::vector<std::shared_ptr<VertexBuffer>> m_VertexBuffers;
-            std::shared_ptr<IndexBuffer> m_IndexBuffer;
+            std::vector<Reference<VertexBuffer>> m_VertexBuffers;
+            Reference<IndexBuffer> m_IndexBuffer;
 
     };
 }

@@ -2,6 +2,7 @@
 #include <chrono>
 
 #include <Violet/Violet.hpp>
+#include <Violet/Platform/OpenGL/OpenGLShader.hpp>
 #include <imgui.h>
 
 #include <glm/glm.hpp>
@@ -16,8 +17,8 @@ class TestLayer: public Violet::Layer {
 
             // Vertex array
             m_VertexArray.reset(Violet::VertexArray::create());
-            std::shared_ptr<Violet::VertexBuffer> m_VertexBuffer;
-            std::shared_ptr<Violet::IndexBuffer> m_IndexBuffer;
+            Violet::Reference<Violet::VertexBuffer> m_VertexBuffer;
+            Violet::Reference<Violet::IndexBuffer> m_IndexBuffer;
 
             //Vertex layout
             Violet::BufferLayout layout = {
@@ -39,8 +40,8 @@ class TestLayer: public Violet::Layer {
             m_VertexArray->setIndexBuffer(m_IndexBuffer);
 
             m_SquareVA.reset(Violet::VertexArray::create());
-            std::shared_ptr<Violet::VertexBuffer> squareVB;
-            std::shared_ptr<Violet::IndexBuffer> squareIB;
+            Violet::Reference<Violet::VertexBuffer> squareVB;
+            Violet::Reference<Violet::IndexBuffer> squareIB;
 
             float squareVertices[3 * 4] {
                 -0.5f, -0.5f, 0.0f,
@@ -84,13 +85,14 @@ layout(location = 0) out vec4 color;
 in vec3 v_Position;
 in vec4 v_Color;
 
+uniform vec4 u_Color;
 
 void main(){
-  color = v_Color;
+  color = u_Color;
 }
 )";
 
-            m_Shader.reset(Violet::Shader::create(vertexSrc, fragmentSrc));
+            m_FlatColorShader.reset(Violet::Shader::create(vertexSrc, fragmentSrc));
             std::string vertexSrc2 = R"(#version 330 core
 
 layout(location = 0) in vec3 a_Position;
@@ -119,7 +121,7 @@ void main(){
         }
 
         void onUpdate(Violet::Timestep deltaTime) override {
-            VGE_CORE_INFO("Delta time: {0}({1} UPS)", deltaTime.getSeconds(), 1.0/deltaTime.getSeconds());
+            //VGE_CORE_INFO("Delta time: {0}({1} UPS)", deltaTime.getSeconds(), 1.0/deltaTime.getSeconds());
             Violet::RenderCommand::setClearColor({0,.5f,.5f,1});
             Violet::RenderCommand::clear();
             //float newRotation = m_Camera.getRotation();
@@ -145,13 +147,19 @@ void main(){
             Violet::Renderer::beginScene(m_Camera);
             for (int i = -10; i <= 10; i++){
                 for(int j = -10; j <= 10; j++){
+                    if((i + j) % 2 == 0){
+                        std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_RedColor);
+                    } else {
+                        std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_BlueColor);
+                    }
                     glm::vec3 pos(i * 0.11f, j * 0.11f ,0.0f);
                     glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-                    Violet::Renderer::submit(m_Shader2,m_SquareVA,transform);
+                    Violet::Renderer::submit(m_FlatColorShader,m_SquareVA,transform);
                 }
             }
+            std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", {0.8f, 0.0f, 0.6f, 1.0f});
             Violet::Renderer::submit(m_Shader2,m_SquareVA, glm::translate(glm::mat4(1.0), m_CameraPosition));
-            Violet::Renderer::submit(m_Shader, m_VertexArray);
+            Violet::Renderer::submit(m_FlatColorShader, m_VertexArray);
 
             Violet::Renderer::endScene();
         }
@@ -167,18 +175,22 @@ void main(){
         }
 
         void onImguiRender(Violet::Timestep deltaTime) override{
-            ImGui::Begin("test");
-            ImGui::Text("Hello world!");
+            ImGui::Begin("Settings");
+            ImGui::ColorEdit4("Red Color", glm::value_ptr(m_RedColor));
+            ImGui::ColorEdit4("Blue Color", glm::value_ptr(m_BlueColor));
             ImGui::End();
         }
 
     private:
-        std::shared_ptr<Violet::Shader> m_Shader;
-        std::shared_ptr<Violet::Shader> m_Shader2;
-        std::shared_ptr<Violet::VertexArray> m_VertexArray;
-        std::shared_ptr<Violet::VertexArray> m_SquareVA;
+        Violet::Reference<Violet::Shader> m_FlatColorShader;
+        Violet::Reference<Violet::Shader> m_Shader2;
+        Violet::Reference<Violet::VertexArray> m_VertexArray;
+        Violet::Reference<Violet::VertexArray> m_SquareVA;
 
         Violet::OrthographicCamera m_Camera;
+
+        glm::vec4 m_RedColor = {176.0f / 255.0f, 53.0f / 255.f, 42.f / 255.f, 1.0f};
+        glm::vec4 m_BlueColor = {42.0f / 255.0f, 53.0f / 255.f, 176.f / 255.f, 1.0f};
 
         glm::vec3 m_CameraPosition = {0.0f, 0.0f, 0.0f};
         float m_CameraSpeed = 1.f;

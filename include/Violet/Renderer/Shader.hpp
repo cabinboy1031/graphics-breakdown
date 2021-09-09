@@ -13,8 +13,6 @@ namespace Violet{
             virtual void bind() const = 0;
             virtual void unbind() const = 0;
 
-            virtual void uploadUniformMat4(const std::string& name, const glm::mat4& matrix) = 0;
-
             static Shader* create(const std::string vertexSrc, const std::string fragmentSrc);
     };
 }

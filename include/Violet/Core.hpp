@@ -21,4 +21,14 @@
 
 #define VGE_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
 
+#include <memory>
+namespace Violet{
+    template<typename T>
+    using Scoped = std::unique_ptr<T>;
+
+    template<typename T>
+    using Reference = std::shared_ptr<T>;
+
+}
+
 #endif // __VIOLET_CORE_HPP_

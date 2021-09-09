@@ -14,7 +14,7 @@ namespace Violet{
                 s_RendererAPI->clear();
             }
 
-            inline static void drawIndexed(const std::shared_ptr<VertexArray>& vertexArray){
+            inline static void drawIndexed(const Reference<VertexArray>& vertexArray){
                 s_RendererAPI->drawIndexed(vertexArray);
             }
         private:

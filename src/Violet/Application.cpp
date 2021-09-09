@@ -52,7 +52,6 @@ void Application::onEvent(Event& e){
     EventDispatcher dispatcher(e);
     dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
 
-
     for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); ){
         (*--it)->onEvent(e);
         if(e.handled())

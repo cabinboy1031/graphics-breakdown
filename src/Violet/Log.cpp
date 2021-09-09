@@ -1,8 +1,8 @@
 #include "Violet/Log.hpp"
 using namespace Violet;
 
-std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
-std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
+Reference<spdlog::logger> Log::s_CoreLogger;
+Reference<spdlog::logger> Log::s_ClientLogger;
 
 void Log::init(){
     spdlog::set_pattern("%^[%T] %n: %v%$");
