@@ -43,16 +43,18 @@ class TestLayer: public Violet::Layer {
             Violet::Reference<Violet::VertexBuffer> squareVB;
             Violet::Reference<Violet::IndexBuffer> squareIB;
 
-            float squareVertices[3 * 4] {
-                -0.5f, -0.5f, 0.0f,
-                 0.5f, -0.5f, 0.0f,
-                 0.5f,  0.5f, 0.0f,
-                -0.5f,  0.5f, 0.0f,
+            float squareVertices[5 * 4] {
+                -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+                 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+                -0.5f,  0.5f, 0.0f, 0.0f, 1.0f,
+
             };
 
             squareVB.reset(Violet::VertexBuffer::create(squareVertices, sizeof(squareVertices)));
             squareVB->setLayout({
-                {Violet::ShaderDataType::Float3, "a_Position"}
+                {Violet::ShaderDataType::Float3, "a_Position"},
+                {Violet::ShaderDataType::Float2, "a_TexCoord"}
             });
 
             m_SquareVA->addVertexBuffer(squareVB);
@@ -118,6 +120,41 @@ void main(){
 )";
             m_Shader2.reset(Violet::Shader::create(vertexSrc2, fragmentSrc2));
 
+            std::string vertexSrc3 = R"(#version 330 core
+layout(location = 0) in vec3 a_Position;
+layout(location = 1) in vec2 a_TexCoord;
+
+out vec3 v_Position;
+out vec2 v_TexCoord;
+
+uniform mat4 u_ViewProjection;
+uniform mat4 u_Transform;
+
+void main(){
+  v_TexCoord = a_TexCoord;
+  gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
+}
+)";
+
+            std::string fragmentSrc3 = R"(#version 330 core
+
+layout(location = 0) out vec4 color;
+in vec3 v_Position;
+in vec2 v_TexCoord;
+
+uniform sampler2D u_Texture;
+
+uniform vec4 u_Color;
+
+void main(){
+  color = texture(u_Texture, v_TexCoord);
+}
+)";
+
+            m_TextureShader.reset(Violet::Shader::create(vertexSrc3, fragmentSrc3));
+            m_CheckerboardTex = Violet::Texture2D::create("./build/bin/assets/textures/Checkerboard.png");
+            m_TextureShader->bind();
+            std::dynamic_pointer_cast<Violet::OpenGLShader>(m_TextureShader)->uploadUniformInt("u_Texture", 0);
         }
 
         void onUpdate(Violet::Timestep deltaTime) override {
@@ -145,6 +182,7 @@ void main(){
             glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
             Violet::Renderer::beginScene(m_Camera);
+            m_FlatColorShader->bind();
             for (int i = -10; i <= 10; i++){
                 for(int j = -10; j <= 10; j++){
                     if((i + j) % 2 == 0){
@@ -160,6 +198,10 @@ void main(){
             std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", {0.8f, 0.0f, 0.6f, 1.0f});
             Violet::Renderer::submit(m_Shader2,m_SquareVA, glm::translate(glm::mat4(1.0), m_CameraPosition));
             Violet::Renderer::submit(m_FlatColorShader, m_VertexArray);
+
+
+            m_CheckerboardTex->bind(0);
+            Violet::Renderer::submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
             Violet::Renderer::endScene();
         }
@@ -182,10 +224,11 @@ void main(){
         }
 
     private:
-        Violet::Reference<Violet::Shader> m_FlatColorShader;
+        Violet::Reference<Violet::Shader> m_FlatColorShader, m_TextureShader;
         Violet::Reference<Violet::Shader> m_Shader2;
         Violet::Reference<Violet::VertexArray> m_VertexArray;
         Violet::Reference<Violet::VertexArray> m_SquareVA;
+        Violet::Reference<Violet::Texture2D> m_CheckerboardTex;
 
         Violet::OrthographicCamera m_Camera;
 
@@ -204,7 +247,7 @@ class Sandbox: public Violet::Application {
         }
 
         ~Sandbox(){
-
+            VGE_TRACE("Beginning cleanup.")
         }
 
 };

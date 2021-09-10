@@ -16,6 +16,7 @@ add_library(violetgl
   Violet/Renderer/Buffer.cpp
   Violet/Renderer/VertexArray.cpp
   Violet/Renderer/Camera.cpp
+  Violet/Renderer/Texture.cpp
 
   Violet/Platform/Linux/LinuxWindow.cpp
   Violet/Platform/Linux/LinuxInput.cpp
@@ -25,6 +26,7 @@ add_library(violetgl
   Violet/Platform/OpenGL/OpenGLShader.cpp
   Violet/Platform/OpenGL/OpenGLVertexArray.cpp
   Violet/Platform/OpenGL/OpenGLRenderAPI.cpp
+  Violet/Platform/OpenGL/OpenGLTexture.cpp
 
   Violet/ImGui/ImguiLayer.cpp
   Violet/ImGui/ImguiBuild.cpp
@@ -33,6 +35,7 @@ add_library(violetgl
 target_link_libraries(violetgl PRIVATE
   glad4
   glfw
+  stblib
   )
 
 target_link_libraries(violetgl PUBLIC

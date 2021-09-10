@@ -16,6 +16,9 @@ include_directories(lib/glad/include/)
 add_subdirectory(lib/glm/)
 include_directories(lib/glm/include/)
 
+add_subdirectory(lib/stb/)
+include_directories(lib/stb/)
+
 # ImGui Settings
 set(IMGUI_EXAMPLES OFF)
 add_subdirectory(lib/imgui)

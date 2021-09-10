@@ -3,6 +3,7 @@
 #include "Violet/Events/ApplicationEvent.hpp"
 #include "Violet/Log.hpp"
 
+#include <glad/glad.h>
 #include <glm/glm.hpp>
 
 // Temporary
@@ -23,6 +24,7 @@ Application::Application(){
 
     m_ImguiLayer = new ImguiLayer();
     pushOverlay(m_ImguiLayer);
+
 }
 
 Application::~Application(){
