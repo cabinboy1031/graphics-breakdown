@@ -5,6 +5,7 @@
 namespace Violet{
     class OpenGLRendererAPI:public RendererAPI {
         public:
+            virtual void init() override;
             virtual void setClearColor(glm::vec4 color) override;
             virtual void clear() override;
 

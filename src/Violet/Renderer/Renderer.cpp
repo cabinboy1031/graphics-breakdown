@@ -2,7 +2,13 @@
 #include "Violet/Platform/OpenGL/OpenGLShader.hpp"
 
 using namespace Violet;
+
 glm::mat4 Renderer::s_ViewProjectionMatrix = glm::mat4(0.0f);
+
+void Renderer::init(){
+    RenderCommand::init();
+}
+
 void Renderer::beginScene(Camera& camera){
     s_ViewProjectionMatrix = camera.getViewProjectionMatrix();
 }

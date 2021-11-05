@@ -10,6 +10,8 @@
 namespace Violet{
     class Renderer{
         public:
+            static void init();
+
             static void beginScene(Camera& camera);
             static void endScene();
 

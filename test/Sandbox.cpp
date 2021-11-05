@@ -152,9 +152,12 @@ void main(){
 )";
 
             m_TextureShader.reset(Violet::Shader::create(vertexSrc3, fragmentSrc3));
-            m_CheckerboardTex = Violet::Texture2D::create("./build/bin/assets/textures/Checkerboard.png");
-            m_TextureShader->bind();
             std::dynamic_pointer_cast<Violet::OpenGLShader>(m_TextureShader)->uploadUniformInt("u_Texture", 0);
+            m_TextureShader->bind();
+
+            m_CheckerboardTex = Violet::Texture2D::create("./build/bin/assets/textures/pattern.png");
+            m_TransparentTex = Violet::Texture2D::create("./build/bin/assets/textures/transparent.png");
+
         }
 
         void onUpdate(Violet::Timestep deltaTime) override {
@@ -201,7 +204,11 @@ void main(){
 
 
             m_CheckerboardTex->bind(0);
-            Violet::Renderer::submit(m_TextureShader, m_SquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+            Violet::Renderer::submit(m_TextureShader, m_SquareVA,
+                                    glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+            m_TransparentTex->bind(0);
+            Violet::Renderer::submit(m_TextureShader, m_SquareVA,
+                                    glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
             Violet::Renderer::endScene();
         }
@@ -229,6 +236,7 @@ void main(){
         Violet::Reference<Violet::VertexArray> m_VertexArray;
         Violet::Reference<Violet::VertexArray> m_SquareVA;
         Violet::Reference<Violet::Texture2D> m_CheckerboardTex;
+        Violet::Reference<Violet::Texture2D> m_TransparentTex;
 
         Violet::OrthographicCamera m_Camera;
 

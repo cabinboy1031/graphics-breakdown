@@ -6,6 +6,9 @@
 namespace Violet{
     class RenderCommand {
         public:
+            inline static void init(){
+                s_RendererAPI->init();
+            }
             inline static void setClearColor(const glm::vec4 color){
                 s_RendererAPI->setClearColor(color);
             }

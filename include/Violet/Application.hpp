@@ -8,6 +8,7 @@
 #include "Violet/ImGui/ImguiLayer.hpp"
 #include "Violet/Events/ApplicationEvent.hpp"
 #include "Violet/Core/Timestep.hpp"
+#include "Violet/Renderer/Renderer.hpp"
 
 #include "Violet/ImGui/ImguiLayer.hpp"
 
