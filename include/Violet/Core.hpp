@@ -4,7 +4,11 @@
 #ifdef VGE_PLATFORM_LINUX
     #define VIOLET_API gnu::visibility("default")
 #elif VGE_PLATFORM_WINDOWS
-    #error Application doesnt support windows at the moment! Try linux.
+    #ifdef VGE_BUILD_DLL
+        #define VIOLET_API __declspec(dllexport)
+    #else
+        #define VIOLET_API __declspec(dllimport)
+    #endif
 #else
     #error Application only supports Linux builds right now!
 #endif //VGE_PLATFORM
