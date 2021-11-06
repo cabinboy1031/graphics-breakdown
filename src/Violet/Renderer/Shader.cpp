@@ -12,3 +12,11 @@ Shader* Shader::create(const std::string vertexSrc,
     }
     return nullptr;
 }
+
+Shader* Shader::create(const std::string filePath){
+    switch(RendererAPI::getAPI()){
+        case(RendererAPI::API::OpenGL):       return new OpenGLShader(filePath);
+        case(RendererAPI::API::None):         VGE_CORE_ASSERT(false, "RendererAPI::None currently returns nullptr.");
+    }
+    return nullptr;
+}

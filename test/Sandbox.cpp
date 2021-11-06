@@ -65,36 +65,7 @@ class TestLayer: public Violet::Layer {
             squareIB.reset(Violet::IndexBuffer::create(squareIndices,6));
             m_SquareVA->setIndexBuffer(squareIB);
 
-            std::string vertexSrc = R"(#version 330 core
-layout(location = 0) in vec3 a_Position;
-layout(location = 1) in vec4 a_Color;
-out vec3 v_Position;
-out vec4 v_Color;
-
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
-
-void main(){
-  gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-  v_Position = a_Position;
-  v_Color = a_Color;
-}
-)";
-
-            std::string fragmentSrc = R"(#version 330 core
-
-layout(location = 0) out vec4 color;
-in vec3 v_Position;
-in vec4 v_Color;
-
-uniform vec4 u_Color;
-
-void main(){
-  color = u_Color;
-}
-)";
-
-            m_FlatColorShader.reset(Violet::Shader::create(vertexSrc, fragmentSrc));
+            m_FlatColorShader.reset(Violet::Shader::create("./test/assets/shaders/color.glsl"));
             std::string vertexSrc2 = R"(#version 330 core
 
 layout(location = 0) in vec3 a_Position;
@@ -120,43 +91,14 @@ void main(){
 )";
             m_Shader2.reset(Violet::Shader::create(vertexSrc2, fragmentSrc2));
 
-            std::string vertexSrc3 = R"(#version 330 core
-layout(location = 0) in vec3 a_Position;
-layout(location = 1) in vec2 a_TexCoord;
 
-out vec3 v_Position;
-out vec2 v_TexCoord;
 
-uniform mat4 u_ViewProjection;
-uniform mat4 u_Transform;
-
-void main(){
-  v_TexCoord = a_TexCoord;
-  gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
-}
-)";
-
-            std::string fragmentSrc3 = R"(#version 330 core
-
-layout(location = 0) out vec4 color;
-in vec3 v_Position;
-in vec2 v_TexCoord;
-
-uniform sampler2D u_Texture;
-
-uniform vec4 u_Color;
-
-void main(){
-  color = texture(u_Texture, v_TexCoord);
-}
-)";
-
-            m_TextureShader.reset(Violet::Shader::create(vertexSrc3, fragmentSrc3));
+            m_TextureShader.reset(Violet::Shader::create("./test/assets/shaders/texture.glsl"));
             std::dynamic_pointer_cast<Violet::OpenGLShader>(m_TextureShader)->uploadUniformInt("u_Texture", 0);
             m_TextureShader->bind();
 
-            m_CheckerboardTex = Violet::Texture2D::create("./build/bin/assets/textures/pattern.png");
-            m_TransparentTex = Violet::Texture2D::create("./build/bin/assets/textures/transparent.png");
+            m_CheckerboardTex = Violet::Texture2D::create("./test/assets/textures/pattern.png");
+            m_TransparentTex = Violet::Texture2D::create("./test/assets/textures/transparent.png");
 
         }
 

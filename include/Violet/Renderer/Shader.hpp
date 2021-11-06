@@ -14,6 +14,7 @@ namespace Violet{
             virtual void unbind() const = 0;
 
             static Shader* create(const std::string vertexSrc, const std::string fragmentSrc);
+            static Shader* create(const std::string filePath);
     };
 }
 
