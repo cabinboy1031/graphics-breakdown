@@ -16,7 +16,7 @@ namespace Violet{
 
             virtual void onAttach();
             virtual void onDetach();
-            virtual void onImguiRender();
+            virtual void onImguiRender(Timestep);
 
             void begin();
             void end();

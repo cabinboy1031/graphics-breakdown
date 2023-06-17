@@ -50,7 +50,7 @@ void ImguiLayer::onDetach() {
     ImGui::DestroyContext();
 }
 
-void ImguiLayer::onImguiRender(){
+void ImguiLayer::onImguiRender(Timestep time){
     static bool show = true;
     ImGui::ShowDemoWindow(&show);
 }
