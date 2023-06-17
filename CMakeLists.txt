@@ -68,11 +68,5 @@ add_subdirectory(src/)
 ######################################################################
 # test target executable
 ######################################################################
-add_executable(test
-  test/Sandbox.cpp)
-
-target_link_libraries(
-  test PRIVATE
-  violetgl
-  )
+add_subdirectory(test/)
 ######################################################################

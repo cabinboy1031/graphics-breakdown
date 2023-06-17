@@ -1,5 +1,6 @@
 #ifndef __VIOLET_ENTRYPOINT_H_
 #define __VIOLET_ENTRYPOINT_H_
+#include "Violet.hpp"
 
 extern Violet::Application* Violet::CreateApplication();
 
