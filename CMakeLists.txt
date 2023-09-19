@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.16)
 project(violet_GL)
 
 # custom set variables
-#set(CMAKE_BUILD_TYPE "Debug")
+set(CMAKE_BUILD_TYPE "Debug")
 
 ######################################################################
 # Library subdirectories
@@ -24,6 +24,7 @@ set(IMGUI_EXAMPLES OFF)
 add_subdirectory(lib/imgui)
 include_directories(lib/imgui/)
 ######################################################################
+
 # cmake options
 ######################################################################
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

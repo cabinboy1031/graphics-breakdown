@@ -65,7 +65,7 @@ class TestLayer: public Violet::Layer {
             squareIB.reset(Violet::IndexBuffer::create(squareIndices,6));
             m_SquareVA->setIndexBuffer(squareIB);
 
-            m_FlatColorShader.reset(Violet::Shader::create("./test/assets/shaders/color.glsl"));
+            m_FlatColorShader.reset(Violet::Shader::create("./assets/shaders/color.glsl"));
             std::string vertexSrc2 = R"(#version 330 core
 
 layout(location = 0) in vec3 a_Position;
@@ -93,12 +93,12 @@ void main(){
 
 
 
-            m_TextureShader.reset(Violet::Shader::create("./test/assets/shaders/texture.glsl"));
+            m_TextureShader.reset(Violet::Shader::create("./assets/shaders/texture.glsl"));
             std::dynamic_pointer_cast<Violet::OpenGLShader>(m_TextureShader)->uploadUniformInt("u_Texture", 0);
             m_TextureShader->bind();
 
-            m_CheckerboardTex = Violet::Texture2D::create("./test/assets/textures/pattern.png");
-            m_TransparentTex = Violet::Texture2D::create("./test/assets/textures/transparent.png");
+            m_CheckerboardTex = Violet::Texture2D::create("./assets/textures/pattern.png");
+            m_TransparentTex = Violet::Texture2D::create("./assets/textures/transparent.png");
 
         }
 

@@ -8,3 +8,5 @@ target_link_libraries(
   test_exec PRIVATE
   violetgl
   )
+
+file (COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
