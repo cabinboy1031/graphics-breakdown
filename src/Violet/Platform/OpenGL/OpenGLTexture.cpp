@@ -5,6 +5,35 @@
 #include "stb/stb_image.h"
 
 using namespace Violet;
+namespace Violet::Utils {
+
+		static GLenum VioletImageFormatToGLDataFormat(ImageFormat format)
+		{
+			switch (format)
+			{
+				case ImageFormat::RGB8:  return GL_RGB;
+				case ImageFormat::RGBA8: return GL_RGBA;
+        default: VGE_CORE_ASSERT(false, "");
+			}
+
+			VGE_CORE_ASSERT(false, "");
+			return 0;
+		}
+
+		static GLenum VioletImageFormatToGLInternalFormat(ImageFormat format)
+		{
+			switch (format)
+			{
+        case ImageFormat::RGB8:  return GL_RGB8;
+        case ImageFormat::RGBA8: return GL_RGBA8;
+        default: VGE_CORE_ASSERT(false, "");
+			}
+
+      VGE_CORE_ASSERT(false, "");
+			return 0;
+		}
+}
+
 
 OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
   :m_Path(path), m_RendererID(0){
@@ -42,6 +71,24 @@ OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
   stbi_image_free(data);
 }
 
+OpenGLTexture2D::OpenGLTexture2D(const Violet::TextureSpecification& specification)
+  :m_Specification(specification),
+  m_Width(m_Specification.width),
+  m_Height(m_Specification.height){
+  m_InternalFormat = Utils::VioletImageFormatToGLInternalFormat(m_Specification.format);
+  m_DataFormat = Utils::VioletImageFormatToGLDataFormat(m_Specification.format);
+
+  glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
+  glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
+
+  glTextureParameteri(m_RendererID, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTextureParameteri(m_RendererID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+  glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_S, GL_REPEAT);
+  glTextureParameteri(m_RendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
+}
+
+
 OpenGLTexture2D::~OpenGLTexture2D(){
   glDeleteTextures(1, &m_RendererID);
 }
@@ -49,3 +96,9 @@ OpenGLTexture2D::~OpenGLTexture2D(){
 void OpenGLTexture2D::bind(uint32_t slot) const {
   glBindTextureUnit(slot, m_RendererID);
 }
+
+void OpenGLTexture2D::setData(void* data, uint32_t size){
+  uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+  VGE_CORE_ASSERT(size == m_Width * m_Height * bpp, "Data must be entire texture!");
+  glTextureSubImage2D(m_RendererID, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
+	}

@@ -12,3 +12,11 @@ Reference<Texture2D> Texture2D::create(const std::string &path){
     }
     return nullptr;
 }
+
+Reference<Texture2D> Texture2D::create(const TextureSpecification& specification){
+    switch(RendererAPI::getAPI()){
+        case(RendererAPI::API::OpenGL):       return std::make_shared<OpenGLTexture2D>(specification);
+        case(RendererAPI::API::None):         VGE_CORE_ASSERT(false, "RendererAPI::None currently returns nullptr.");
+    }
+    return nullptr;
+}

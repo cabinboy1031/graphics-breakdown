@@ -11,16 +11,20 @@ uniform mat4 u_Transform;
 
 void main(){
   v_TexCoord = a_TexCoord;
-  v_Position = a_Position;
   gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);
 }
 
 #type fragment
 #version 330 core
+
 layout(location = 0) out vec4 color;
 in vec3 v_Position;
+in vec2 v_TexCoord;
 
+uniform sampler2D u_Texture;
+
+uniform vec4 u_Color;
 
 void main(){
-  color = vec4(0,1,0,1);
+  color = texture(u_Texture, v_TexCoord);
 }
