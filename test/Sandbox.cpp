@@ -126,33 +126,32 @@ void main(){
             //m_Camera.setPosition(m_CameraPosition);
             glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-            Violet::Renderer::beginScene(m_Camera);
-            m_FlatColorShader->bind();
-            for (int i = -10; i <= 10; i++){
-                for(int j = -10; j <= 10; j++){
-                    if((i + j) % 2 == 0){
-                        std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_RedColor);
-                    } else {
-                        std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_BlueColor);
+            Violet::Renderer::beginScene(m_Camera);{
+                m_FlatColorShader->bind();
+                for (int i = -10; i <= 10; i++){
+                    for(int j = -10; j <= 10; j++){
+                        if((i + j) % 2 == 0){
+                            std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_RedColor);
+                        } else {
+                            std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", m_BlueColor);
+                        }
+                        glm::vec3 pos(i * 0.11f, j * 0.11f ,0.0f);
+                        glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
+                        Violet::Renderer::submit(m_FlatColorShader,m_SquareVA,transform);
                     }
-                    glm::vec3 pos(i * 0.11f, j * 0.11f ,0.0f);
-                    glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-                    Violet::Renderer::submit(m_FlatColorShader,m_SquareVA,transform);
                 }
-            }
-            std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", {0.8f, 0.0f, 0.6f, 1.0f});
-            Violet::Renderer::submit(m_Shader2,m_SquareVA, glm::translate(glm::mat4(1.0), m_CameraPosition));
-            Violet::Renderer::submit(m_FlatColorShader, m_VertexArray);
+                std::dynamic_pointer_cast<Violet::OpenGLShader>(m_FlatColorShader)->uploadUniformFloat4("u_Color", {0.8f, 0.0f, 0.6f, 1.0f});
+                Violet::Renderer::submit(m_Shader2,m_SquareVA, glm::translate(glm::mat4(1.0), m_CameraPosition));
+                Violet::Renderer::submit(m_FlatColorShader, m_VertexArray);
 
 
-            m_CheckerboardTex->bind(0);
-            Violet::Renderer::submit(m_TextureShader, m_SquareVA,
-                                    glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-            m_TransparentTex->bind(0);
-            Violet::Renderer::submit(m_TextureShader, m_SquareVA,
-                                    glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
-
-            Violet::Renderer::endScene();
+                m_CheckerboardTex->bind(0);
+                Violet::Renderer::submit(m_TextureShader, m_SquareVA,
+                                        glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+                m_TransparentTex->bind(0);
+                Violet::Renderer::submit(m_TextureShader, m_SquareVA,
+                                        glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+            } Violet::Renderer::endScene();
         }
 
         void onEvent(Violet::Event& event) override {

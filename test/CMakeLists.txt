@@ -9,4 +9,13 @@ target_link_libraries(
   violetgl
   )
 
-file (COPY assets DESTINATION ${CMAKE_BINARY_DIR}/bin)
+file (COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+
+
+add_executable(falling_sand
+  FallingSand.cpp)
+
+target_link_libraries(
+  falling_sand PRIVATE
+  violetgl
+  )
